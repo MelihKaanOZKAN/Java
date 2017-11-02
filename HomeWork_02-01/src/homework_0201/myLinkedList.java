@@ -99,7 +99,7 @@ public class myLinkedList {
 		return result;
 	}
 
-	public int findElement(String name) {
+	public int Search(String name) {
 		int result= 1;
 		Element iter = root;
 		try {
@@ -118,7 +118,7 @@ public class myLinkedList {
 		return result;
 	}
 	
-	public int findElement(Date birthDate) {
+	public int Search(Date birthDate) {
 		int result= 1;
 		Element iter = root;
 		try {
@@ -137,7 +137,7 @@ public class myLinkedList {
 		return result;
 	}
 
-	public int findElement(long phoneNumber) {
+	public int Search(long phoneNumber) {
 		int result= 1;
 		Element iter = root;
 		try {

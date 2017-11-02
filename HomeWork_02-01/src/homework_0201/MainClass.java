@@ -32,7 +32,7 @@ public class MainClass {
 				System.out.println("1 - Addition Operations ");
 				System.out.println("2 - Remove Operations ");
 				System.out.println("3 - Count Elements ");
-				System.out.println("4 - Find Element ");
+				System.out.println("4 - Search ");
 				System.out.println("5 - Print");
 				System.out.println("6 - Help");
 				System.out.println("7 - Exit");
@@ -165,7 +165,7 @@ public class MainClass {
 					System.out.print("Name: ");
 					String name = input.next();
 					System.out.println("Sequence: ");
-					System.out.println(linkedList.findElement(name));
+					System.out.println(linkedList.Search(name));
 					break;
 				}
 				case 2: {
@@ -173,14 +173,14 @@ public class MainClass {
 					String birthDate = input.next();
 					Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
 					System.out.println("Sequence: ");
-					System.out.println(linkedList.findElement(thedate));
+					System.out.println(linkedList.Search(thedate));
 					break;
 				}
 				case 3: {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
 					System.out.println("Sequence: ");
-					System.out.println(linkedList.findElement(phoneNumber));
+					System.out.println(linkedList.Search(phoneNumber));
 					break;
 				}
 				case 4: {

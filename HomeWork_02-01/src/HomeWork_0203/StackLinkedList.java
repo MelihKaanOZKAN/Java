@@ -7,24 +7,27 @@ import java.util.LinkedList;
 public class StackLinkedList {
 	private LinkedList<Element> list = new LinkedList<Element>();
 
-	public void add(Element element) {
+	public void push(Element element) {
 		try {
-			list.push(element);
+			list.addLast(element);
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
 	
 
-	public void remove() {
+	public void pop() {
 		try {
 			if (!list.isEmpty()) {
 				Element element = list.getLast();
 				System.out.println("Deleted Data: ");
 				System.out.println("Name / Surname / Birthdate / Phone number");
 				printData(element);
-				list.pop();
+				list.removeLast();
 				PressEnter();
+			}
+			else {
+				System.out.println("Stack is EMPTY");
 			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
@@ -74,7 +77,7 @@ public class StackLinkedList {
 	}
 
 
-	public int findElement(String name) {
+	public int search(String name) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
@@ -90,7 +93,7 @@ public class StackLinkedList {
 		return result;
 	}
 	
-	public int findElement(Date birthDate) {
+	public int search(Date birthDate) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
@@ -106,7 +109,7 @@ public class StackLinkedList {
 		return result;
 	}
 
-	public int findElement(long phoneNumber) {
+	public int search(long phoneNumber) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {

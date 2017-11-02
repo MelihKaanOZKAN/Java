@@ -26,6 +26,9 @@ public class QueueLinkedList {
 				list.removeFirst();
 				PressEnter();
 			}
+			else {
+				System.out.println("Queue is EMPTY");
+			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
@@ -74,7 +77,7 @@ public class QueueLinkedList {
 	}
 
 
-	public int findElement(String name) {
+	public int Search(String name) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
@@ -90,7 +93,7 @@ public class QueueLinkedList {
 		return result;
 	}
 	
-	public int findElement(Date birthDate) {
+	public int Search(Date birthDate) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
@@ -106,7 +109,7 @@ public class QueueLinkedList {
 		return result;
 	}
 
-	public int findElement(long phoneNumber) {
+	public int Search(long phoneNumber) {
 		int result= -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {

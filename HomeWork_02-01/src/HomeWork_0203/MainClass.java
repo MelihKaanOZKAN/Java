@@ -32,7 +32,7 @@ public class MainClass {
 				System.out.println("1 - Addition Operations ");
 				System.out.println("2 - Remove Operations ");
 				System.out.println("3 - Count Elements ");
-				System.out.println("4 - Find Element ");
+				System.out.println("4 - Search ");
 				System.out.println("5 - Print");
 				System.out.println("6 - Help");
 				System.out.println("7 - Exit");
@@ -50,12 +50,12 @@ public class MainClass {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
 					Date thedate = format.parse(birthDate);
-					stack.add(new Element(name, surname, thedate, phoneNumber));
+					stack.push(new Element(name, surname, thedate, phoneNumber));
 					System.out.println("***************");
 					break;
 				}
 				case 2: {
-					stack.remove();
+					stack.pop();
 					break;
 				}
 				case 3: {
@@ -113,7 +113,7 @@ public class MainClass {
 				case 1: {
 					System.out.print("Name: ");
 					String name = input.next();
-					int index =stack.findElement(name);
+					int index =stack.search(name);
 					if(index == -1)
 					{
 						System.out.println("Error: '" + name + "' Could not be found");
@@ -128,7 +128,7 @@ public class MainClass {
 					System.out.print("Birthdate: ");
 					String birthDate = input.next();
 					Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
-					int index =stack.findElement(birthDate);
+					int index =stack.search(birthDate);
 					if(index == -1)
 					{
 						System.out.println("Error: '" + birthDate + "' Could not be found");
@@ -141,7 +141,7 @@ public class MainClass {
 				case 3: {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
-					int index =stack.findElement(phoneNumber);
+					int index =stack.search(phoneNumber);
 					if(index == -1)
 					{
 						System.out.println("Error: '" + phoneNumber + "' Could not be found");
