@@ -13,8 +13,7 @@ public class myLinkedList {
 	public void add(Element element) {
 		try {
 			Element iter = root;
-			if(root == null)
-			{
+			if (root == null) {
 				root = element;
 				return;
 			}
@@ -26,25 +25,41 @@ public class myLinkedList {
 			System.out.println(err.getMessage());
 		}
 	}
-	
+
 	private void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
 			System.in.read();
-		}catch (Exception err) {
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
+
 	public void remove(String name) {
 		try {
+			if (root == null) {
+				System.out.println("Error: No DATA");
+				return;
+			}
 			Element iter = root;
-			while (iter.next != null && iter.next.getName() != name) {
+			while (iter.next.next != null && !iter.next.getName().equalsIgnoreCase(name)) {
 				iter = iter.next;
 			}
-			if (iter.next == null && iter.getName() != name) {
+			if (iter.next.next == null && !iter.next.getName().equalsIgnoreCase(name)) {
 				System.out.println("Error: '" + name + "' Could not be found");
 			} else {
+				System.out.println(" 1");
+				if(iter == root)
+				{
+					root = null;
+				}
+				if(iter.next.next == null)
+				{
+					iter.next = null;
+					System.out.println(" 2");
+				}
 				iter.next = iter.next.next;
+				System.out.println(" 3");
 			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
@@ -53,6 +68,10 @@ public class myLinkedList {
 
 	public void remove(Date birthDate) {
 		try {
+			if (root == null) {
+				System.out.println("Error: No DATA");
+				return;
+			}
 			Element iter = root;
 			while (iter.next != null && iter.next.getBirthDate() != birthDate) {
 				iter = iter.next;
@@ -60,6 +79,10 @@ public class myLinkedList {
 			if (iter.next == null && iter.getBirthDate() != birthDate) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
 			} else {
+				if (iter.next == null) {
+					iter = null;
+					return;
+				}
 				iter.next = iter.next.next;
 			}
 		} catch (Exception err) {
@@ -68,13 +91,22 @@ public class myLinkedList {
 	}
 
 	public void remove(long phoneNumber) {
-		try {Element iter = root;
+		try {
+			if (root == null) {
+				System.out.println("Error: No DATA");
+				return;
+			}
+			Element iter = root;
 			while (iter.next != null && iter.next.getPhoneNumber() != phoneNumber) {
 				iter = iter.next;
 			}
 			if (iter.next == null && iter.getPhoneNumber() != phoneNumber) {
 				System.out.println("Error: '" + phoneNumber + "' Could not be found");
 			} else {
+				if (iter.next == null) {
+					iter = null;
+					return;
+				}
 				iter.next = iter.next.next;
 			}
 		} catch (Exception err) {
@@ -100,7 +132,7 @@ public class myLinkedList {
 	}
 
 	public int Search(String name) {
-		int result= 1;
+		int result = 1;
 		Element iter = root;
 		try {
 			while (iter.next != null && iter.next.getName() != name) {
@@ -117,16 +149,16 @@ public class myLinkedList {
 		}
 		return result;
 	}
-	
+
 	public int Search(Date birthDate) {
-		int result= 1;
+		int result = 1;
 		Element iter = root;
 		try {
 			while (iter.next != null && iter.next.getBirthDate() != birthDate) {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getBirthDate()!= birthDate) {
+			if (iter.next == null && iter.getBirthDate() != birthDate) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
 			} else {
 				result++;
@@ -138,14 +170,14 @@ public class myLinkedList {
 	}
 
 	public int Search(long phoneNumber) {
-		int result= 1;
+		int result = 1;
 		Element iter = root;
 		try {
 			while (iter.next != null && iter.next.getPhoneNumber() != phoneNumber) {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getPhoneNumber()!= phoneNumber) {
+			if (iter.next == null && iter.getPhoneNumber() != phoneNumber) {
 				System.out.println("Error: '" + phoneNumber + "' Could not be found");
 			} else {
 				result++;
@@ -159,19 +191,18 @@ public class myLinkedList {
 	public void printData() {
 		try {
 			Element iter = root;
-			if (root == null)
-			{
+			if (root == null) {
 				System.out.println("List is EMPTY");
 				return;
 			}
 			System.out.println("Name / Surname / BirthDate / PhoneNumber");
-				while(iter != null)
-				{
-					System.out.println(iter.getName() + " / " + iter.getSurname() + " / " + iter.getBirthDate() + " / " + iter.getPhoneNumber());
-					iter = iter.next;
-				}
-				PressEnter();
-		}catch (Exception err) {
+			while (iter != null) {
+				System.out.println(iter.getName() + " / " + iter.getSurname() + " / " + iter.getBirthDate() + " / "
+						+ iter.getPhoneNumber());
+				iter = iter.next;
+			}
+			PressEnter();
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
