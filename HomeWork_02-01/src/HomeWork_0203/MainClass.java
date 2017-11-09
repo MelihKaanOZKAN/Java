@@ -59,7 +59,13 @@ public class MainClass {
 				System.out.println("6 - Help");
 				System.out.println("7 - Exit");
 				System.out.print(">");
-				choose = input.nextInt();
+				String chooseTmp = input.next();
+				try {
+					choose = Integer.parseInt(chooseTmp);
+				} catch (java.lang.NumberFormatException err) {
+					System.out.println("Wrong Choose: Write an Integer.");
+					choose = 888;
+				}
 				switch (choose) {
 				case 1: {
 					try {
@@ -109,7 +115,9 @@ public class MainClass {
 					System.out.println("Good Bye.. ");
 					System.exit(0);
 				}
-
+				case 888: {
+					break;
+				}
 				default: {
 					System.out.println("Wrong Choose. Try Again");
 					PressEnter();
@@ -135,7 +143,13 @@ public class MainClass {
 				System.out.println("4 - Print ");
 				System.out.println("5 - Back ");
 				System.out.print("-> ");
-				choose = input.nextInt();
+				String chooseTmp = input.next();
+				try {
+					choose = Integer.parseInt(chooseTmp);
+				} catch (java.lang.NumberFormatException err) {
+					System.out.println("Wrong Choose: Write an Integer.");
+					choose = 888;
+				}
 				switch (choose) {
 				case 1: {
 					System.out.print("Name: ");
@@ -184,6 +198,9 @@ public class MainClass {
 					break;
 				}
 				case 5: {
+					break;
+				}
+				case 888: {
 					break;
 				}
 				default: {
