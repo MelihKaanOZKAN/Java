@@ -62,18 +62,22 @@ public class MainClass {
 				choose = input.nextInt();
 				switch (choose) {
 				case 1: {
-					System.out.println("***************");
-					System.out.print("Name: ");
-					String name = input.next();
-					System.out.print("Surname: ");
-					String surname = input.next();
-					System.out.print("Birthdate: ");
-					String birthDate = input.next();
-					System.out.print("Phone Number: ");
-					long phoneNumber = input.nextLong();
-					Date thedate = format.parse(birthDate);
-					stack.push(new Element(name, surname, thedate, phoneNumber));
-					System.out.println("***************");
+					try {
+						System.out.println("***************");
+						System.out.print("Name: ");
+						String name = input.next();
+						System.out.print("Surname: ");
+						String surname = input.next();
+						System.out.print("Birthdate: ");
+						String birthDate = input.next();
+						System.out.print("Phone Number: ");
+						long phoneNumber = input.nextLong();
+						Date thedate = format.parse(birthDate);
+						stack.push(new Element(name, surname, thedate, phoneNumber));
+						System.out.println("***************");
+					} catch (java.text.ParseException err) {
+						System.out.println("Wrong Date Format: Check Help");
+					}
 					break;
 				}
 				case 2: {
@@ -112,8 +116,6 @@ public class MainClass {
 				}
 			} while (choose != 7);
 
-		} catch (java.text.ParseException err) {
-			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
@@ -146,14 +148,18 @@ public class MainClass {
 					break;
 				}
 				case 2: {
-					System.out.print("Birthdate: ");
-					String birthDate = input.next();
-					Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
-					int index = stack.search(thedate);
-					if (index == -1) {
-						System.out.println("Error: '" + birthDate + "' Could not be found");
-					} else {
-						System.out.println("The serched birthdate is " + index + " in the stack");
+					try {
+						System.out.print("Birthdate: ");
+						String birthDate = input.next();
+						Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
+						int index = stack.search(thedate);
+						if (index == -1) {
+							System.out.println("Error: '" + birthDate + "' Could not be found");
+						} else {
+							System.out.println("The serched birthdate is " + index + " in the stack");
+						}
+					} catch (java.text.ParseException err) {
+						System.out.println("Wrong Date Format: Check Help");
 					}
 					break;
 				}
@@ -182,8 +188,6 @@ public class MainClass {
 				}
 			} while (choose != 5);
 
-		} catch (java.text.ParseException err) {
-			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
