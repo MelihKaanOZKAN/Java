@@ -31,6 +31,7 @@ public class MainClass {
 	}
 
 	public static void main(String[] args) {
+		Test(true);
 		MainMenu();
 	}
 
@@ -148,7 +149,7 @@ public class MainClass {
 					System.out.print("Birthdate: ");
 					String birthDate = input.next();
 					Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
-					int index = stack.search(birthDate);
+					int index = stack.search(thedate);
 					if (index == -1) {
 						System.out.println("Error: '" + birthDate + "' Could not be found");
 					} else {
