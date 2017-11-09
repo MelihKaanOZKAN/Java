@@ -53,7 +53,7 @@ public class MainClass {
 				System.out.println("******** StackLinkedList Operations ********");
 				System.out.println("1 - Addition Operations ");
 				System.out.println("2 - Remove Operations ");
-				System.out.println("3 - Count Elements ");
+				System.out.println("3 - Count of Elements ");
 				System.out.println("4 - Search ");
 				System.out.println("5 - Print");
 				System.out.println("6 - Help");
