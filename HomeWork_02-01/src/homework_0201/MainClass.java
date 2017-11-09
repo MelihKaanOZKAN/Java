@@ -74,6 +74,7 @@ public class MainClass {
 						System.out.println("***************");
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
+						PressEnter();
 					}
 					break;
 				}
@@ -89,7 +90,6 @@ public class MainClass {
 				}
 				case 4: {
 					MenuFind();
-					PressEnter();
 					break;
 				}
 				case 5: {
@@ -149,6 +149,7 @@ public class MainClass {
 						PressEnter();
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
+						PressEnter();
 					}
 					break;
 				}
@@ -212,6 +213,7 @@ public class MainClass {
 						PressEnter();
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
+						PressEnter();
 					}
 					break;
 				}

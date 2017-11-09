@@ -77,6 +77,7 @@ public class MainClass {
 						System.out.println("***************");
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
+						PressEnter();
 					}
 					break;
 				}
@@ -161,6 +162,7 @@ public class MainClass {
 						}
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
+						PressEnter();
 					}
 					PressEnter();
 					break;
