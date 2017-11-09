@@ -1,27 +1,48 @@
 package HomeWork_0203;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
-
 public class MainClass {
 
 	static StackLinkedList stack = new StackLinkedList();
 
+	private static void Test(boolean mode) {
+		if (mode) {
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			try {
+				stack.push(new HomeWork_0203.Element("Melih", "Ozkan", format.parse("30-08-1998"),
+						Long.parseLong("5448848144")));
+				stack.push(new HomeWork_0203.Element("Ali", "Demir", format.parse("30-08-1997"),
+						Long.parseLong("5448848145")));
+				stack.push(new HomeWork_0203.Element("Burak", "Çit", format.parse("30-08-1996"),
+						Long.parseLong("5448848146")));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		MainMenu();
 	}
+
 	private static void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
 			System.in.read();
-		}catch (Exception err) {
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
-	
+
 	private static void MainMenu() {
 		try {
 			Scanner input = new Scanner(System.in);
@@ -90,11 +111,12 @@ public class MainClass {
 				}
 			} while (choose != 7);
 
+		} catch (java.text.ParseException err) {
+			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
-
 
 	private static void MenuFind() {
 		try {
@@ -113,27 +135,23 @@ public class MainClass {
 				case 1: {
 					System.out.print("Name: ");
 					String name = input.next();
-					int index =stack.search(name);
-					if(index == -1)
-					{
+					int index = stack.search(name);
+					if (index == -1) {
 						System.out.println("Error: '" + name + "' Could not be found");
-					}
-					else {
+					} else {
 						System.out.println("The serched name is " + index + " in the stack");
 					}
-					
+
 					break;
 				}
 				case 2: {
 					System.out.print("Birthdate: ");
 					String birthDate = input.next();
 					Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
-					int index =stack.search(birthDate);
-					if(index == -1)
-					{
+					int index = stack.search(birthDate);
+					if (index == -1) {
 						System.out.println("Error: '" + birthDate + "' Could not be found");
-					}
-					else {
+					} else {
 						System.out.println("The serched birthdate is " + index + " in the stack");
 					}
 					break;
@@ -141,12 +159,10 @@ public class MainClass {
 				case 3: {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
-					int index =stack.search(phoneNumber);
-					if(index == -1)
-					{
+					int index = stack.search(phoneNumber);
+					if (index == -1) {
 						System.out.println("Error: '" + phoneNumber + "' Could not be found");
-					}
-					else {
+					} else {
 						System.out.println("The serched phone number is " + index + " in the stack");
 					}
 					break;
@@ -165,10 +181,10 @@ public class MainClass {
 				}
 			} while (choose != 5);
 
+		} catch (java.text.ParseException err) {
+			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
 }
-
-

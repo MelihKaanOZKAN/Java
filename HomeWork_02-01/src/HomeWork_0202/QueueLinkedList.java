@@ -3,7 +3,6 @@ package HomeWork_0202;
 import java.util.Date;
 import java.util.LinkedList;
 
-
 public class QueueLinkedList {
 	private LinkedList<Element> list = new LinkedList<Element>();
 
@@ -14,7 +13,6 @@ public class QueueLinkedList {
 			System.out.println(err.getMessage());
 		}
 	}
-	
 
 	public void remove() {
 		try {
@@ -25,8 +23,7 @@ public class QueueLinkedList {
 				printData(element);
 				list.removeFirst();
 				PressEnter();
-			}
-			else {
+			} else {
 				System.out.println("Queue is EMPTY");
 			}
 		} catch (Exception err) {
@@ -36,8 +33,7 @@ public class QueueLinkedList {
 
 	public void printData() {
 		try {
-			if (list.isEmpty())
-			{
+			if (list.isEmpty()) {
 				System.out.println("Error: Queue is EMPTY");
 				PressEnter();
 				return;
@@ -51,14 +47,16 @@ public class QueueLinkedList {
 			System.out.println(err.getMessage());
 		}
 	}
+
 	private static void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
 			System.in.read();
-		}catch (Exception err) {
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
+
 	public void printData(Element element) {
 		try {
 			System.out.println(element.getName() + " / " + element.getSurname() + " / " + element.getBirthDate() + " / "
@@ -76,14 +74,12 @@ public class QueueLinkedList {
 		return list.size();
 	}
 
-
 	public int Search(String name) {
-		int result= -1;
+		int result = -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getName() == name)
-				{
-					result = i+1;
+				if (list.get(i).getName().equalsIgnoreCase(name)) {
+					result = i + 1;
 					break;
 				}
 			}
@@ -92,14 +88,13 @@ public class QueueLinkedList {
 		}
 		return result;
 	}
-	
+
 	public int Search(Date birthDate) {
-		int result= -1;
+		int result = -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getBirthDate() == birthDate)
-				{
-					result = i+1;
+				if (list.get(i).getBirthDate().equals(birthDate)) {
+					result = i + 1;
 					break;
 				}
 			}
@@ -110,12 +105,11 @@ public class QueueLinkedList {
 	}
 
 	public int Search(long phoneNumber) {
-		int result= -1;
+		int result = -1;
 		try {
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getPhoneNumber() == phoneNumber)
-				{
-					result = i+1;
+				if (list.get(i).getPhoneNumber() == phoneNumber) {
+					result = i + 1;
 					break;
 				}
 			}

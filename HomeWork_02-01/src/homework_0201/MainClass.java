@@ -1,27 +1,46 @@
 package homework_0201;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
-
 public class MainClass {
 
 	static myLinkedList linkedList = new myLinkedList();
 
+	private static void Test(boolean mode) {
+		if (mode) {
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			try {
+				linkedList.add(new Element("Melih", "Ozkan", format.parse("30-08-1998"), Long.parseLong("5448848144")));
+				linkedList.add(new Element("Ali", "Demir", format.parse("30-08-1997"), Long.parseLong("5448848145")));
+				linkedList.add(new Element("Burak", "Çit", format.parse("30-08-1996"), Long.parseLong("5448848146")));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public static void main(String[] args) {
+		Test(true);
 		MainMenu();
 	}
+
 	private static void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
 			System.in.read();
-		}catch (Exception err) {
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
-	
+
 	private static void MainMenu() {
 		try {
 			Scanner input = new Scanner(System.in);
@@ -90,6 +109,8 @@ public class MainClass {
 				}
 			} while (choose != 7);
 
+		} catch (java.text.ParseException err) {
+			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
@@ -142,6 +163,8 @@ public class MainClass {
 				}
 			} while (choose != 5);
 
+		} catch (java.text.ParseException err) {
+			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
@@ -197,6 +220,8 @@ public class MainClass {
 				}
 			} while (choose != 5);
 
+		} catch (java.text.ParseException err) {
+			System.out.println("Wrong Date Format: Check Help");
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}

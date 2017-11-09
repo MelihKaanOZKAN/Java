@@ -42,24 +42,24 @@ public class myLinkedList {
 				return;
 			}
 			Element iter = root;
-			while (iter.next.next != null && !iter.next.getName().equalsIgnoreCase(name)) {
+			if (iter.getName().equalsIgnoreCase(name)) {
+				root = iter.next;
+				System.out.println("Success!");
+				return;
+			}
+			while (iter.next != null && !iter.next.getName().equalsIgnoreCase(name)) {
 				iter = iter.next;
 			}
-			if (iter.next.next == null && !iter.next.getName().equalsIgnoreCase(name)) {
+			if (iter.next == null && !(iter.getName().equalsIgnoreCase(name))) {
 				System.out.println("Error: '" + name + "' Could not be found");
 			} else {
-				System.out.println(" 1");
-				if(iter == root)
-				{
-					root = null;
-				}
-				if(iter.next.next == null)
-				{
+				if (iter.next.next == null) {
 					iter.next = null;
-					System.out.println(" 2");
+					System.out.println("Success!");
+					return;
 				}
 				iter.next = iter.next.next;
-				System.out.println(" 3");
+				System.out.println("Success!");
 			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
@@ -73,17 +73,25 @@ public class myLinkedList {
 				return;
 			}
 			Element iter = root;
-			while (iter.next != null && iter.next.getBirthDate() != birthDate) {
+			if (iter.getBirthDate().equals(birthDate)) {
+				root = iter.next;
+				System.out.println("Success!");
+				return;
+			}
+			while (iter.next != null && !(iter.getBirthDate().equals(birthDate))) {
 				iter = iter.next;
 			}
-			if (iter.next == null && iter.getBirthDate() != birthDate) {
+
+			if (iter.next == null && !(iter.next.getBirthDate().equals(birthDate))) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
 			} else {
-				if (iter.next == null) {
-					iter = null;
+				if (iter.next.next == null) {
+					iter.next = null;
+					System.out.println("Success!");
 					return;
 				}
 				iter.next = iter.next.next;
+				System.out.println("Success!");
 			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
@@ -97,17 +105,25 @@ public class myLinkedList {
 				return;
 			}
 			Element iter = root;
-			while (iter.next != null && iter.next.getPhoneNumber() != phoneNumber) {
+			if (iter.getPhoneNumber() == phoneNumber) {
+				root = iter.next;
+				System.out.println("Success!");
+				return;
+			}
+			while (iter.next != null && !(iter.next.getPhoneNumber() == phoneNumber)) {
 				iter = iter.next;
 			}
-			if (iter.next == null && iter.getPhoneNumber() != phoneNumber) {
+
+			if (iter.next == null && !(iter.getPhoneNumber() == phoneNumber)) {
 				System.out.println("Error: '" + phoneNumber + "' Could not be found");
 			} else {
-				if (iter.next == null) {
-					iter = null;
+				if (iter.next.next == null) {
+					iter.next = null;
+					System.out.println("Success!");
 					return;
 				}
 				iter.next = iter.next.next;
+				System.out.println("Success!");
 			}
 		} catch (Exception err) {
 			System.out.println(err.getMessage());
@@ -135,11 +151,14 @@ public class myLinkedList {
 		int result = 1;
 		Element iter = root;
 		try {
-			while (iter.next != null && iter.next.getName() != name) {
+			if (iter.getName().equalsIgnoreCase(name)) {
+				return result;
+			}
+			while (iter.next != null && !iter.next.getName().equalsIgnoreCase(name)) {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getName() != name) {
+			if (iter.next == null && iter.getName().equalsIgnoreCase(name)) {
 				System.out.println("Error: '" + name + "' Could not be found");
 			} else {
 				result++;
@@ -154,11 +173,14 @@ public class myLinkedList {
 		int result = 1;
 		Element iter = root;
 		try {
-			while (iter.next != null && iter.next.getBirthDate() != birthDate) {
+			if (iter.getBirthDate().equals(birthDate)) {
+				return result;
+			}
+			while (iter.next != null && (!iter.next.getBirthDate().equals(birthDate))) {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getBirthDate() != birthDate) {
+			if (iter.next == null && iter.getBirthDate().equals(birthDate)) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
 			} else {
 				result++;
@@ -173,6 +195,9 @@ public class myLinkedList {
 		int result = 1;
 		Element iter = root;
 		try {
+			if (iter.getPhoneNumber() == phoneNumber) {
+				return result;
+			}
 			while (iter.next != null && iter.next.getPhoneNumber() != phoneNumber) {
 				iter = iter.next;
 				result++;
