@@ -77,6 +77,9 @@ public class QueueLinkedList {
 	public int Search(String name) {
 		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getName().equalsIgnoreCase(name)) {
 					result = i + 1;
@@ -92,6 +95,9 @@ public class QueueLinkedList {
 	public int Search(Date birthDate) {
 		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getBirthDate().equals(birthDate)) {
 					result = i + 1;
@@ -107,6 +113,9 @@ public class QueueLinkedList {
 	public int Search(long phoneNumber) {
 		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getPhoneNumber() == phoneNumber) {
 					result = i + 1;

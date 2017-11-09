@@ -55,7 +55,7 @@ public class MainClass {
 				System.out.println("5 - Print");
 				System.out.println("6 - Help");
 				System.out.println("7 - Exit");
-				System.out.print("-> ");
+				System.out.print(">");
 				choose = input.nextInt();
 				switch (choose) {
 				case 1: {
@@ -108,6 +108,7 @@ public class MainClass {
 
 				default: {
 					System.out.println("Wrong Choose. Try Again");
+					PressEnter();
 					break;
 				}
 				}
@@ -136,6 +137,7 @@ public class MainClass {
 					System.out.print("Name: ");
 					String name = input.next();
 					linkedList.remove(name);
+					PressEnter();
 					break;
 				}
 				case 2: {
@@ -144,6 +146,7 @@ public class MainClass {
 						String birthDate = input.next();
 						Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
 						linkedList.remove(thedate);
+						PressEnter();
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
 					}
@@ -153,10 +156,12 @@ public class MainClass {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
 					linkedList.remove(phoneNumber);
+					PressEnter();
 					break;
 				}
 				case 4: {
 					linkedList.printData();
+					PressEnter();
 					break;
 				}
 				case 5: {
@@ -164,6 +169,7 @@ public class MainClass {
 				}
 				default: {
 					System.out.println("Wrong Choose. Try Again");
+					PressEnter();
 					break;
 				}
 				}
@@ -193,6 +199,7 @@ public class MainClass {
 					String name = input.next();
 					System.out.println("Sequence: ");
 					System.out.println(linkedList.Search(name));
+					PressEnter();
 					break;
 				}
 				case 2: {
@@ -202,6 +209,7 @@ public class MainClass {
 						Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
 						System.out.println("Sequence: ");
 						System.out.println(linkedList.Search(thedate));
+						PressEnter();
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
 					}
@@ -212,6 +220,7 @@ public class MainClass {
 					long phoneNumber = input.nextLong();
 					System.out.println("Sequence: ");
 					System.out.println(linkedList.Search(phoneNumber));
+					PressEnter();
 					break;
 				}
 				case 4: {
@@ -223,6 +232,7 @@ public class MainClass {
 				}
 				default: {
 					System.out.println("Wrong Choose. Try Again");
+					PressEnter();
 					break;
 				}
 				}

@@ -3,7 +3,6 @@ package HomeWork_0203;
 import java.util.Date;
 import java.util.LinkedList;
 
-
 public class StackLinkedList {
 	private LinkedList<Element> list = new LinkedList<Element>();
 
@@ -14,7 +13,6 @@ public class StackLinkedList {
 			System.out.println(err.getMessage());
 		}
 	}
-	
 
 	public void pop() {
 		try {
@@ -24,9 +22,7 @@ public class StackLinkedList {
 				System.out.println("Name / Surname / Birthdate / Phone number");
 				printData(element);
 				list.removeLast();
-				PressEnter();
-			}
-			else {
+			} else {
 				System.out.println("Stack is EMPTY");
 			}
 		} catch (Exception err) {
@@ -36,8 +32,7 @@ public class StackLinkedList {
 
 	public void printData() {
 		try {
-			if (list.isEmpty())
-			{
+			if (list.isEmpty()) {
 				System.out.println("Error: Stack is EMPTY");
 				PressEnter();
 				return;
@@ -51,14 +46,16 @@ public class StackLinkedList {
 			System.out.println(err.getMessage());
 		}
 	}
+
 	private static void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
 			System.in.read();
-		}catch (Exception err) {
+		} catch (Exception err) {
 			System.out.println(err.getMessage());
 		}
 	}
+
 	public void printData(Element element) {
 		try {
 			System.out.println(element.getName() + " / " + element.getSurname() + " / " + element.getBirthDate() + " / "
@@ -76,14 +73,15 @@ public class StackLinkedList {
 		return list.size();
 	}
 
-
 	public int search(String name) {
-		int result= -1;
+		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getName() == name)
-				{
-					result = i+1;
+				if (list.get(i).getName() == name) {
+					result = i + 1;
 					break;
 				}
 			}
@@ -92,14 +90,16 @@ public class StackLinkedList {
 		}
 		return result;
 	}
-	
+
 	public int search(Date birthDate) {
-		int result= -1;
+		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getBirthDate() == birthDate)
-				{
-					result = i+1;
+				if (list.get(i).getBirthDate() == birthDate) {
+					result = i + 1;
 					break;
 				}
 			}
@@ -110,12 +110,14 @@ public class StackLinkedList {
 	}
 
 	public int search(long phoneNumber) {
-		int result= -1;
+		int result = -1;
 		try {
+			if (!isEmpty()) {
+				return result;
+			}
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getPhoneNumber() == phoneNumber)
-				{
-					result = i+1;
+				if (list.get(i).getPhoneNumber() == phoneNumber) {
+					result = i + 1;
 					break;
 				}
 			}

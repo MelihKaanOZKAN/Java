@@ -50,7 +50,7 @@ public class MainClass {
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			int choose = 0;
 			do {
-				System.out.println("******** QueueLinkedList Operations ********");
+				System.out.println("******** Queue with LinkedList Operations ********");
 				System.out.println("1 - Addition Operations ");
 				System.out.println("2 - Remove Operations ");
 				System.out.println("3 - Count of Elements ");
@@ -58,7 +58,7 @@ public class MainClass {
 				System.out.println("5 - Print");
 				System.out.println("6 - Help");
 				System.out.println("7 - Exit");
-				System.out.print("-> ");
+				System.out.print(">");
 				choose = input.nextInt();
 				switch (choose) {
 				case 1: {
@@ -82,6 +82,7 @@ public class MainClass {
 				}
 				case 2: {
 					queue.remove();
+					PressEnter();
 					break;
 				}
 				case 3: {
@@ -92,7 +93,6 @@ public class MainClass {
 				}
 				case 4: {
 					MenuFind();
-					PressEnter();
 					break;
 				}
 				case 5: {
@@ -111,6 +111,7 @@ public class MainClass {
 
 				default: {
 					System.out.println("Wrong Choose. Try Again");
+					PressEnter();
 					break;
 				}
 				}
@@ -144,7 +145,7 @@ public class MainClass {
 					} else {
 						System.out.println("The searched name is " + index + " in the queue");
 					}
-
+					PressEnter();
 					break;
 				}
 				case 2: {
@@ -161,6 +162,7 @@ public class MainClass {
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
 					}
+					PressEnter();
 					break;
 				}
 				case 3: {
@@ -172,6 +174,7 @@ public class MainClass {
 					} else {
 						System.out.println("The searched phone number is " + index + " in the queue");
 					}
+					PressEnter();
 					break;
 				}
 				case 4: {
@@ -183,6 +186,7 @@ public class MainClass {
 				}
 				default: {
 					System.out.println("Wrong Choose. Try Again");
+					PressEnter();
 					break;
 				}
 				}
