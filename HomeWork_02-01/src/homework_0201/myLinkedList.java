@@ -5,8 +5,7 @@ import java.util.Date;
 /****************************************************************************
  ** ÝNÖNÜ ÜNÝVERSÝTESÝ  MÜHENDÝSLÝK FAKÜLTESÝ  BÝLGÝSAYAR MÜHENDÝSLÝÐÝ BÖLÜMÜ
  ** VERÝ YAPILARI DERSÝ  2   NOLU ÖDEV   2   NOLU SORUNUN ÇÖZÜMÜ
- ** ÖÐRENCÝ ADI......: MELÝH KAAN ÖZKAN 
- ** ÖÐRENCÝ NUMARASI....:  02160001012 
+ ** ÖÐRENCÝ ADI......: MELÝH KAAN ÖZKAN ÖÐRENCÝ NUMARASI....:  02160001012
  **
  ****************************************************************************/
 
@@ -61,11 +60,6 @@ public class myLinkedList {
 			if (iter.next == null && !(iter.getName().equalsIgnoreCase(name))) {
 				System.out.println("Error: '" + name + "' Could not be found");
 			} else {
-				if (iter.next.next == null) {
-					iter.next = null;
-					System.out.println("Success!");
-					return;
-				}
 				iter.next = iter.next.next;
 				System.out.println("Success!");
 			}
@@ -86,18 +80,13 @@ public class myLinkedList {
 				System.out.println("Success!");
 				return;
 			}
-			while (iter.next != null && !(iter.getBirthDate().equals(birthDate))) {
+			while (iter.next != null && !(iter.next.getBirthDate().equals(birthDate))) {
 				iter = iter.next;
 			}
 
 			if (iter.next == null && !(iter.next.getBirthDate().equals(birthDate))) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
 			} else {
-				if (iter.next.next == null) {
-					iter.next = null;
-					System.out.println("Success!");
-					return;
-				}
 				iter.next = iter.next.next;
 				System.out.println("Success!");
 			}
@@ -125,11 +114,6 @@ public class myLinkedList {
 			if (iter.next == null && !(iter.getPhoneNumber() == phoneNumber)) {
 				System.out.println("Error: '" + phoneNumber + "' Could not be found");
 			} else {
-				if (iter.next.next == null) {
-					iter.next = null;
-					System.out.println("Success!");
-					return;
-				}
 				iter.next = iter.next.next;
 				System.out.println("Success!");
 			}
@@ -166,8 +150,9 @@ public class myLinkedList {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getName().equalsIgnoreCase(name)) {
+			if (iter.next == null && !(iter.getName().equalsIgnoreCase(name))) {
 				System.out.println("Error: '" + name + "' Could not be found");
+				result = -1;
 			} else {
 				result++;
 			}
@@ -184,12 +169,13 @@ public class myLinkedList {
 			if (iter.getBirthDate().equals(birthDate)) {
 				return result;
 			}
-			while (iter.next != null && (!iter.next.getBirthDate().equals(birthDate))) {
+			while (iter.next != null && !(iter.next.getBirthDate().equals(birthDate))) {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getBirthDate().equals(birthDate)) {
+			if (iter.next == null && !(iter.getBirthDate().equals(birthDate))) {
 				System.out.println("Error: '" + birthDate + "' Could not be found");
+				result = -1;
 			} else {
 				result++;
 			}
@@ -210,8 +196,9 @@ public class myLinkedList {
 				iter = iter.next;
 				result++;
 			}
-			if (iter.next == null && iter.getPhoneNumber() != phoneNumber) {
+			if (iter.next == null && !(iter.getPhoneNumber() != phoneNumber)) {
 				System.out.println("Error: '" + phoneNumber + "' Could not be found");
+				result = -1;
 			} else {
 				result++;
 			}

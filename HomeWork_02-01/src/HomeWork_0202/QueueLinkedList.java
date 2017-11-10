@@ -85,7 +85,7 @@ public class QueueLinkedList {
 	public int Search(String name) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {
@@ -103,7 +103,7 @@ public class QueueLinkedList {
 	public int Search(Date birthDate) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {
@@ -121,7 +121,7 @@ public class QueueLinkedList {
 	public int Search(long phoneNumber) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {

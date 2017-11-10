@@ -84,7 +84,7 @@ public class StackLinkedList {
 	public int search(String name) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {
@@ -102,7 +102,7 @@ public class StackLinkedList {
 	public int search(Date birthDate) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {
@@ -120,7 +120,7 @@ public class StackLinkedList {
 	public int search(long phoneNumber) {
 		int result = -1;
 		try {
-			if (!isEmpty()) {
+			if (isEmpty()) {
 				return result;
 			}
 			for (int i = 0; i < list.size(); i++) {

@@ -230,7 +230,10 @@ public class MainClass {
 					System.out.print("Name: ");
 					String name = input.next();
 					System.out.println("Sequence: ");
-					System.out.println(linkedList.Search(name));
+					if(linkedList.Search(name) != -1)
+						{
+							System.out.println(linkedList.Search(name));
+						}
 					PressEnter();
 					break;
 				}
@@ -240,7 +243,10 @@ public class MainClass {
 						String birthDate = input.next();
 						Date thedate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(birthDate);
 						System.out.println("Sequence: ");
-						System.out.println(linkedList.Search(thedate));
+						if(linkedList.Search(thedate) != -1)
+						{
+							System.out.println(linkedList.Search(thedate));
+						}
 						PressEnter();
 					} catch (java.text.ParseException err) {
 						System.out.println("Wrong Date Format: Check Help");
@@ -252,7 +258,10 @@ public class MainClass {
 					System.out.print("Phone Number: ");
 					long phoneNumber = input.nextLong();
 					System.out.println("Sequence: ");
-					System.out.println(linkedList.Search(phoneNumber));
+					if(linkedList.Search(phoneNumber) != -1)
+					{
+						System.out.println(linkedList.Search(phoneNumber));
+					}
 					PressEnter();
 					break;
 				}
