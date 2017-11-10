@@ -3,6 +3,18 @@ package HomeWork_0202;
 import java.util.Date;
 import java.util.LinkedList;
 
+/****************************************************************************
+** ÝNÖNÜ ÜNÝVERSÝTESÝ 
+** MÜHENDÝSLÝK FAKÜLTESÝ 
+** BÝLGÝSAYAR MÜHENDÝSLÝÐÝ BÖLÜMÜ
+** VERÝ YAPILARI DERSÝ 
+** 2   NOLU ÖDEV   3   NOLU SORUNUN ÇÖZÜMÜ
+**ÖÐRENCÝ ADI......: MELÝH KAAN ÖZKAN
+** ÖDEV NUMARASI....:  02160001012
+** ÖDEV KONUSU......:
+**
+****************************************************************************/
+
 public class QueueLinkedList {
 	private LinkedList<Element> list = new LinkedList<Element>();
 

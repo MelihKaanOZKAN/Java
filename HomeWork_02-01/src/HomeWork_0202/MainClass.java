@@ -6,6 +6,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
+/****************************************************************************
+** ÝNÖNÜ ÜNÝVERSÝTESÝ 
+** MÜHENDÝSLÝK FAKÜLTESÝ 
+** BÝLGÝSAYAR MÜHENDÝSLÝÐÝ BÖLÜMÜ
+** VERÝ YAPILARI DERSÝ 
+** 2   NOLU ÖDEV   3   NOLU SORUNUN ÇÖZÜMÜ
+**ÖÐRENCÝ ADI......: MELÝH KAAN ÖZKAN
+** ÖDEV NUMARASI....:  02160001012
+** ÖDEV KONUSU......:
+**
+****************************************************************************/
+
 public class MainClass {
 
 	static QueueLinkedList queue = new QueueLinkedList();
