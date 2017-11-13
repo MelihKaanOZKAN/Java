@@ -41,6 +41,10 @@ public class Node {
 		}
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
 	public void inorderTravelsel() {
 		try {
 			if (this.left != null) {
@@ -48,7 +52,7 @@ public class Node {
 			}
 			System.out.println(this.id);
 			if (this.right != null) {
-				System.out.println(this.id);
+				this.right.inorderTravelsel();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,11 +79,11 @@ public class Node {
 	public Node searchParent(int item, Node parent) {
 		Node result = null;
 		try {
-			if (parent.left.id == item || parent.right.id == item) {
+			if (this.left.id == item || this.right.id == item) {
 				result = this;
-			} else if (parent.id < this.id) {
+			} else if (item < this.id) {
 				result = this.left.searchParent(item, parent);
-			} else if (parent.id > this.id) {
+			} else if (item > this.id) {
 				result = this.right.searchParent(item, parent);
 			}
 
@@ -92,8 +96,10 @@ public class Node {
 	public Node searchMax() {
 		Node result = null;
 		try {
-			while (this.right != null) {
+			if (this.right != null) {
 				result = this.right.searchMax();
+			} else {
+				result = this;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,8 +110,10 @@ public class Node {
 	public Node searchMin() {
 		Node result = null;
 		try {
-			while (this.left != null) {
-				result = this.left.searchMin();
+			if (this.left != null) {
+				result = this.left.searchMax();
+			} else {
+				result = this;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,7 +140,7 @@ public class Node {
 	public Node searchMin(Node nd) {
 		Node result = null;
 		try {
-			if (this == nd) {
+			if (this.equals(nd)) {
 				result = this.searchMin();
 			} else if (this.id < nd.id) {
 				result = this.right.searchMin(nd);
@@ -166,7 +174,9 @@ public class Node {
 					}
 					if (tmp.left.left != null && tmp.left.right != null) {
 
-						
+						tmp.left.id = tmp.left.searchMax().id;
+						tmp.remove(this.id);
+						return;
 					}
 				}
 
@@ -183,6 +193,12 @@ public class Node {
 					if (tmp.right.left == null && tmp.right.right != null) {
 						tmp.right.id = tmp.right.right.id;
 						tmp.right.right = null;
+						return;
+					}
+					if (tmp.right.left != null && tmp.right.right != null) {
+
+						tmp.right.id = tmp.left.searchMax().id;
+						tmp.remove(this.id);
 						return;
 					}
 				}
