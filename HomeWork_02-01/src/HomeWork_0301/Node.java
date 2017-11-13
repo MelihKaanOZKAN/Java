@@ -206,9 +206,9 @@ public class Node {
 					}
 					if (tmp.right.left != null && tmp.right.right != null) {
 
-						Node temp = tmp.right.searchParent(tmp.right.searchMax().id, this);
-						Node temp2 = tmp.right.searchMax();
-						tmp.right.id = tmp.right.searchMax().id;
+						Node temp = tmp.right.searchParent(tmp.right.searchMin().id, this);
+						Node temp2 = tmp.right.searchMin();
+						tmp.right.id = tmp.right.searchMin().id;
 						if(temp.left == temp2)
 						{
 							temp.left = null;
