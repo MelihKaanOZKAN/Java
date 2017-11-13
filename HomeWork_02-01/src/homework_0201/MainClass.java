@@ -39,7 +39,6 @@ public class MainClass {
 		Test(true);
 		MainMenu();
 	}
-
 	private static void PressEnter() {
 		try {
 			System.out.println("Press Enter for continue");
