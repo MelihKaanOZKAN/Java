@@ -22,10 +22,18 @@ public class MainClass {
 		System.out.println("C:"+root.searchMin(root.Search(10)).getId());
 		System.out.println("******"); 
 		root.addBST(18); 
+		root.inorderTravelsel();	
+		System.out.println("******"); 
 		root.remove(8);
+		System.out.println("******"); 
 		root.inorderTravelsel();
+		System.out.println("******"); 
+		System.out.println(root.searchParent(root.searchMax().getId(), root.searchMax()));
 		root.remove(root.searchMax().getId());
+		System.out.println("******"); 
 		root.inorderTravelsel();
+
+		System.out.println("******"); 
 
 	}
 

@@ -86,7 +86,6 @@ public class Node {
 			} else if (item > this.id) {
 				result = this.right.searchParent(item, parent);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,7 +110,7 @@ public class Node {
 		Node result = null;
 		try {
 			if (this.left != null) {
-				result = this.left.searchMax();
+				result = this.left.searchMin();
 			} else {
 				result = this;
 			}
@@ -174,8 +173,18 @@ public class Node {
 					}
 					if (tmp.left.left != null && tmp.left.right != null) {
 
+					
+						Node temp = tmp.left.searchParent(tmp.left.searchMax().id, this);
+						Node temp2 = tmp.left.searchMax();
 						tmp.left.id = tmp.left.searchMax().id;
-						tmp.remove(this.id);
+						if(temp.left == temp2)
+						{
+							temp.left = null;
+						}
+						else if(temp.right == temp2)
+						{
+							temp.right = null;
+						}
 						return;
 					}
 				}
@@ -197,8 +206,17 @@ public class Node {
 					}
 					if (tmp.right.left != null && tmp.right.right != null) {
 
-						tmp.right.id = tmp.left.searchMax().id;
-						tmp.remove(this.id);
+						Node temp = tmp.right.searchParent(tmp.right.searchMax().id, this);
+						Node temp2 = tmp.right.searchMax();
+						tmp.right.id = tmp.right.searchMax().id;
+						if(temp.left == temp2)
+						{
+							temp.left = null;
+						}
+						else if(temp.right == temp2)
+						{
+							temp.right = null;
+						}
 						return;
 					}
 				}
