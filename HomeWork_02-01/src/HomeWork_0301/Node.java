@@ -79,12 +79,12 @@ public class Node {
 	public Node searchParent(int item, Node parent) {
 		Node result = null;
 		try {
-			if (this.left.id == item || this.right.id == item) {
+			if (parent.left.id == item && parent.left != null || this.right.id == item && this.right != null) {
 				result = this;
 			} else if (item < this.id) {
-				result = this.left.searchParent(item, parent);
+				result = this.left.searchParent(item, this);
 			} else if (item > this.id) {
-				result = this.right.searchParent(item, parent);
+				result = this.right.searchParent(item, this);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,69 +156,65 @@ public class Node {
 		try {
 			Node tmp = searchParent(item, this);
 			if (tmp != null) {
-				if (tmp.left.id == item) {
-					if (tmp.left.left == null && tmp.left.right == null) {
-						tmp.left = null;
-						return;
-					}
-					if (tmp.left.left != null && tmp.left.right == null) {
-						tmp.left.id = tmp.left.left.id;
-						tmp.left.left = null;
-						return;
-					}
-					if (tmp.left.left == null && tmp.left.right != null) {
-						tmp.left.id = tmp.left.right.id;
-						tmp.left.right = null;
-						return;
-					}
-					if (tmp.left.left != null && tmp.left.right != null) {
+				if (tmp.left != null) {
+					if (tmp.left.id == item) {
+						if (tmp.left.left == null && tmp.left.right == null) {
+							tmp.left = null;
+							return;
+						}
+						if (tmp.left.left != null && tmp.left.right == null) {
+							tmp.left.id = tmp.left.left.id;
+							tmp.left.left = null;
+							return;
+						}
+						if (tmp.left.left == null && tmp.left.right != null) {
+							tmp.left.id = tmp.left.right.id;
+							tmp.left.right = null;
+							return;
+						}
+						if (tmp.left.left != null && tmp.left.right != null) {
 
-					
-						Node temp = tmp.left.searchParent(tmp.left.searchMax().id, this);
-						Node temp2 = tmp.left.searchMax();
-						tmp.left.id = tmp.left.searchMax().id;
-						if(temp.left == temp2)
-						{
-							temp.left = null;
+							Node temp2 = tmp.left.searchMax();
+							Node temp = tmp.left.searchParent(temp2.id, this);
+							tmp.left.id = temp2.id;
+							if (temp.left == temp2) {
+								temp.left = null;
+							} else if (temp.right == temp2) {
+								temp.right = null;
+							}
+							return;
 						}
-						else if(temp.right == temp2)
-						{
-							temp.right = null;
-						}
-						return;
 					}
 				}
-
-				if (tmp.right.id == item) {
-					if (tmp.right.left == null && tmp.right.right == null) {
-						tmp.right = null;
-						return;
-					}
-					if (tmp.right.left != null && tmp.right.right == null) {
-						tmp.right.id = tmp.right.left.id;
-						tmp.right.left = null;
-						return;
-					}
-					if (tmp.right.left == null && tmp.right.right != null) {
-						tmp.right.id = tmp.right.right.id;
-						tmp.right.right = null;
-						return;
-					}
-					if (tmp.right.left != null && tmp.right.right != null) {
-
-						Node temp = tmp.right.searchParent(tmp.right.searchMin().id, this);
-						Node temp2 = tmp.right.searchMin();
-						tmp.right.id = tmp.right.searchMin().id;
-						if(temp.left == temp2)
-						{
-							temp.left = null;
+				if (tmp.right != null) {
+					if (tmp.right.id == item) {
+						if (tmp.right.left == null && tmp.right.right == null) {
+							tmp.right = null;
+							return;
 						}
-						else if(temp.right == temp2)
-						{
-							temp.right = null;
+						if (tmp.right.left != null && tmp.right.right == null) {
+							tmp.right.id = tmp.right.left.id;
+							tmp.right.left = null;
+							return;
 						}
-						return;
-					}
+						if (tmp.right.left == null && tmp.right.right != null) {
+							tmp.right.id = tmp.right.right.id;
+							tmp.right.right = null;
+							return;
+						}
+						if (tmp.right.left != null && tmp.right.right != null) {
+							Node temp2 = tmp.right.searchMin();
+							Node temp = tmp.right.searchParent(temp2.id, this);
+
+							tmp.right.id = temp2.id;
+							if (temp.left == temp2) {
+								temp.left = null;
+							} else if (temp.right == temp2) {
+								temp.right = null;
+							}
+							return;
+						}
+					} 
 				}
 
 			} else {
