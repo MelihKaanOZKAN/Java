@@ -19,16 +19,6 @@ public class MainClass {
 						result[i][j] = tmp;
 						break;
 					}
-					case 'o': {
-						Location tmp = new Location(i, j, null);
-						result[i][j] = tmp;
-						break;
-					}
-					case '.': {
-						Location tmp = new Location(i, j, null);
-						result[i][j] = tmp;
-						break;
-					}
 					case 'S': {
 						Item item = new Item('S', "Saman Destesi");
 						Location tmp = new Location(i, j, item);

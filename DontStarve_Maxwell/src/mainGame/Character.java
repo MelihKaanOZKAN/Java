@@ -9,7 +9,7 @@ public class Character {
 	String name;
 	protected boolean isTorchActive;
 	protected int torchLife;
-	Inventory inventory;
+	private Inventory inventory;
 	char symbol = '@';
 	Location location;
 	Queue<String> correctPath;
@@ -30,20 +30,27 @@ public class Character {
 
 	protected void addItemToInventory(Item item) {
 		try {
-
+			inventory.addItemToPartition(item);
 		} catch (Exception err) {
 
 		}
 	}
 
-	protected Item getItemFromInventory() {
+	protected Item getItemFromInventory(char symbol) {
 		Item result = null;
 		try {
-
+			result = inventory.getItem(symbol);
 		} catch (Exception err) {
 
 		}
 		return result;
 	}
 
+	protected void makeTorch() {
+		try {
+				
+		} catch (Exception err) {
+
+		}
+	}
 }
