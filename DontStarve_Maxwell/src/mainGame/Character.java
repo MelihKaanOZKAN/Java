@@ -1,5 +1,6 @@
 package mainGame;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -13,12 +14,11 @@ public class Character {
 	char symbol = '@';
 	Location location;
 	Queue<String> correctPath;
-	LinkedList<Item> necessaryItems = new LinkedList<Item>();
+	LinkedList<Location> necessaryItems = new LinkedList<Location>();
 
-	public Character(String name, Location location) {
+	public Character(String name) {
 		try {
 			this.name = name;
-			this.location = location;
 			isTorchActive = true;
 			torchLife = 15;
 			inventory = new Inventory();
@@ -53,4 +53,30 @@ public class Character {
 
 		}
 	}
+
+	private int calcDistance(Location calc, Location loc)
+	{
+		int result = 0;
+		try {
+			result = (int) Math.sqrt((calc.X-loc.X)^2 - (calc.Y-loc.Y)^2);
+		}catch (Exception err) {
+			err.printStackTrace();
+		}
+		
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	protected void sortByNearest() {
+		try {
+			int[] necessaryItems_Tmp = new int[necessaryItems.size()];
+			for(int i = 0; i < necessaryItems.size(); i++)
+			{
+				necessaryItems_Tmp[i] = calcDistance(necessaryItems.get(i), location);
+			}
+		}catch (Exception err) {
+			err.printStackTrace();
+		}
+	}
+
+
 }
