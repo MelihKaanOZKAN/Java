@@ -1,5 +1,7 @@
 package mainGame;
 
+import java.util.Queue;
+
 public class MainClass {
 
 	static Character maxwell = new Character("Maxwell");
@@ -89,6 +91,12 @@ public class MainClass {
 		}
 	}
 
+	private static Queue<String> pathFinder(char[][] Map ){
+		return null;
+		
+	}
+	
+	
 	public static void main(String[] args) {
 
 		char[][] Map = {
@@ -104,7 +112,8 @@ public class MainClass {
 						'J', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
 
 		analysisLoc(Map);
-		
+		maxwell.CalcDistance();
+		System.out.println(maxwell.necessaryItems.get(maxwell.GetNearest()).myItem.name);
 	}
 
 }

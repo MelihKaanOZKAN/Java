@@ -15,6 +15,7 @@ public class Character {
 	Location location;
 	Queue<String> correctPath;
 	LinkedList<Location> necessaryItems = new LinkedList<Location>();
+	int[] necessaryItems_Distance;
 
 	public Character(String name) {
 		try {
@@ -65,18 +66,47 @@ public class Character {
 		
 		return result;
 	}
+	
 	@SuppressWarnings("unchecked")
-	protected void sortByNearest() {
+	protected void CalcDistance() {
 		try {
-			int[] necessaryItems_Tmp = new int[necessaryItems.size()];
+			necessaryItems_Distance= new int[necessaryItems.size()];
 			for(int i = 0; i < necessaryItems.size(); i++)
 			{
-				necessaryItems_Tmp[i] = calcDistance(necessaryItems.get(i), location);
+				necessaryItems_Distance[i] = calcDistance(necessaryItems.get(i), location);
 			}
 		}catch (Exception err) {
 			err.printStackTrace();
 		}
 	}
+	
+	protected int GetNearest() {
+		int result = -1;
+		try {
+			int refDistance = necessaryItems_Distance[0];
+			int index = -1;
+			for(int i = 0; i < necessaryItems.size(); i++)
+			{
+				if(refDistance>necessaryItems_Distance[i] && necessaryItems_Distance[i] != -1);
+				{
+					refDistance = necessaryItems_Distance[i];
+					index = i;
+				}
+			}
+			necessaryItems_Distance[index] = -1;
+			result = index;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
-
+	protected void Move(Location dest)
+	{
+		try {
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
