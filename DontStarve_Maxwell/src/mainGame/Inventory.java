@@ -130,8 +130,9 @@ public class Inventory {
 			}
 			}
 		} catch (Exception err) {
-
+			result = null;
 		}
 		return result;
 	}
+
 }
