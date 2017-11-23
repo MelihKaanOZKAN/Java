@@ -130,8 +130,12 @@ public class Character {
 		try {
 			if (CanMove()) {
 				if (isTorchActive) {
-
+					
 				}
+				else {
+					craftTorch();
+				}
+				
 				location = dest;
 				if (location.myItem != null) {
 					inventory.addItemToPartition(location.myItem);
