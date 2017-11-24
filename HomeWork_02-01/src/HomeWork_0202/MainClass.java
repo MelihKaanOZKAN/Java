@@ -29,10 +29,8 @@ public class MainClass {
 				queue.add(new HomeWork_0202.Element("Burak", "Çit", format.parse("30-08-1996"),
 						Long.parseLong("5448848146")));
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

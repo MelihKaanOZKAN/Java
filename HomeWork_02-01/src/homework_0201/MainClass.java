@@ -26,10 +26,8 @@ public class MainClass {
 				linkedList.add(new Element("Ali", "Demir", format.parse("30-08-1997"), Long.parseLong("5448848145")));
 				linkedList.add(new Element("Burak", "Çit", format.parse("30-08-1996"), Long.parseLong("5448848146")));
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
