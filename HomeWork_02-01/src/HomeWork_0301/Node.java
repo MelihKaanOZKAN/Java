@@ -7,7 +7,7 @@ public class Node {
 
 	public Node(int id) {
 		try {
-			this.id = id;
+			this.id = id; 
 			this.left = null;
 			this.right = null;
 		} catch (Exception e) {
