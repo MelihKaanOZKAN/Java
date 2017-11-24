@@ -154,7 +154,23 @@ public class Node {
 
 	public void remove(int item) {
 		try {
-			Node tmp = searchParent(item, this);
+			Node tmp = null;
+			if(this.id == item)
+			{
+				tmp = this;
+				Node temp2 = tmp.left.searchMax();
+				Node temp = tmp.left.searchParent(temp2.id, this);
+				this.id= temp2.id;
+				if (temp.left == temp2) {
+					temp.left = null;
+				} else if (temp.right == temp2) {
+					temp.right = null;
+				}
+				return;
+			}
+			else {
+				tmp = searchParent(item, this);
+			}
 			if (tmp != null) {
 				if (tmp.left != null) {
 					if (tmp.left.id == item) {

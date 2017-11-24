@@ -26,7 +26,7 @@ public class MainClass {
 		System.out.println("******");
 		root.inorderTravelsel();
 		System.out.println("******");
-		root.remove(8);
+		root.remove(10);
 		System.out.println("******");
 		root.inorderTravelsel();
 		System.out.println("******");
