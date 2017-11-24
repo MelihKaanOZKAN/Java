@@ -87,7 +87,7 @@ public class Node {
 				result = this.right.searchParent(item, this);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			result = null;   // Added
 		}
 		return result;
 	}
