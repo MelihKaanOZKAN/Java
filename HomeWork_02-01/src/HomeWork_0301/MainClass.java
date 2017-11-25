@@ -19,8 +19,8 @@ public class MainClass {
 		System.out.println("R:" + root.getId());
 		System.out.println("B:" + root.searchMax().getId());
 		System.out.println("K:" + root.searchMin().getId());
-		System.out.println("D:" + root.searchMax(root.Search(8)).getId());
-		System.out.println("C:" + root.searchMin(root.Search(8)).getId());
+		System.out.println("D:" + root.searchMax(root.Search(10)).getId());
+		System.out.println("C:" + root.searchMin(root.Search(10)).getId());
 		System.out.println("******");
 		root.addBST(18);
 		System.out.println("******");
@@ -33,7 +33,6 @@ public class MainClass {
 		root.remove(root.searchMax().getId());
 		root.inorderTravelsel();
 		System.out.println("******");
-
 	}
 
 }
