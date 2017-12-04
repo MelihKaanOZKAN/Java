@@ -1,5 +1,6 @@
 package mainGame;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class MainClass {
@@ -52,9 +53,9 @@ public class MainClass {
 	public static void main(String[] args) {
 
 		char[][] Map = {
-				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+				{ 'o', 'o', 'S', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
 						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ '@', 'o', 'T', 'T', 'o', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
 						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
 				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'H', 'o', 'o', 'o',
 						'o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
@@ -64,8 +65,10 @@ public class MainClass {
 						'J', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
 
 		analysisLoc(Map);
-		maxwell.CalcDistance();
-		System.out.println(maxwell.necessaryItems.get(maxwell.GetNearest()).myItem.name);
+		maxwell.printInventory();
+		Queue<Location> path = new LinkedList<Location>();
+		
+		maxwell.findPath(maxwell.location, Map, path, endLocation);
 	}
 
 }

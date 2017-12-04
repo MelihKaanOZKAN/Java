@@ -8,7 +8,7 @@ public class Inventory {
 
 	public Inventory() {
 		try {
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 10; i++) {
 				inventory.addLast(new LinkedList<Item>());
 			}
 		} catch (Exception err) {
@@ -73,6 +73,10 @@ public class Inventory {
 				inventory.get(8).add(item);
 				break;
 			}
+			case '#': {
+				inventory.get(9).add(item);
+				break;
+			}
 			}
 		} catch (Exception err) {
 
@@ -126,6 +130,11 @@ public class Inventory {
 			case '*': {
 				result = (Item) inventory.get(8).getLast();
 				inventory.get(8).removeLast();
+				break;
+			}
+			case '#': {
+				result = (Item) inventory.get(9).getLast();
+				inventory.get(9).removeLast();
 				break;
 			}
 			}
