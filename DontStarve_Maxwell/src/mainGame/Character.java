@@ -18,15 +18,10 @@ public class Character {
 	int[] necessaryItems_Distance;
 	private Item activeRaft = null;
 
-	protected void printPath(Queue<Location> path) {
+	protected void printPath() {
 		try {
-			path.toString();
-			/*for ( int i = 0; i < tmp.length; i =+2 )
-			{
-				correctPath.add(this.getStringofPath(tmp[i], tmp[i+1]));
-			}
-			*/
-			//System.out.println(correctPath.toString());
+
+			System.out.println(correctPath.toString());
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -227,7 +222,17 @@ public class Character {
 		}
 	}
 
-	protected void Move(Location dest) {
+	protected void Move(Queue<Location> path) {
+		try {
+			while (!path.isEmpty()) {
+				Move(path.poll());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void Move(Location dest) {
 		try {
 			if (CanMove()) {
 				if (!isTorchActive) {
@@ -253,6 +258,7 @@ public class Character {
 				if (location.myItem != null) {
 					inventory.addItemToPartition(location.myItem);
 				}
+				this.correctPath.add(this.getStringofPath(dest, location));
 			} else {
 				if (!isTorchActive) {
 					System.out.println("Maxwell DEAD! :(");
@@ -264,56 +270,93 @@ public class Character {
 		}
 	}
 
-	protected boolean isCorrect(char[][] Map, Location endLocation)
-	{
+	protected boolean isEnd(char[][] Map, Location currentLocation, Location endLocation) {
 		boolean result = false;
 		try {
-				boolean generator = !inventory.inventory.get(6).isEmpty();
-				boolean gas = !inventory.inventory.get(4).isEmpty();
-				boolean antenna = !inventory.inventory.get(7).isEmpty();
-				boolean key = !inventory.inventory.get(5).isEmpty();
-				if(generator && gas && antenna && key && location.X == endLocation.X && location.Y == endLocation.Y)
-				{
-					System.out.println("TRUEe");
-					result = true;
-				}
-		}catch (Exception e) {
-			e.printStackTrace(); 
+			boolean generator = !inventory.inventory.get(6).isEmpty();
+			boolean gas = !inventory.inventory.get(4).isEmpty();
+			boolean antenna = !inventory.inventory.get(7).isEmpty();
+			boolean key = !inventory.inventory.get(5).isEmpty();
+			if (generator && gas && antenna && key && currentLocation.X == endLocation.X
+					&& currentLocation.Y == endLocation.Y) {
+				System.out.println("TRUE");
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
-	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Queue<Location> path, Location endLocation) {
+
+	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Location endLocation) {
 		Queue<Location> result = new LinkedList<Location>();
 		try {
-			Location east = currentLoc.east(Map), west = currentLoc.west(Map), north = currentLoc.north(Map),
-					south = currentLoc.south(Map);
-			if(this.isCorrect(Map, endLocation))
-			{
-				result = path;
+			Location east, west, north, south, currentLocation;
+
+			result.add(currentLoc);
+			while (!result.isEmpty()) {
+				currentLocation = result.poll();
+				east = currentLocation.east(Map);
+				west = currentLocation.west(Map);
+				north = currentLocation.north(Map);
+				south = currentLocation.south(Map);
+				if (this.isEnd(Map, currentLocation, endLocation)) {
+					break;
+				}
+				if (east != null) {
+					if (east.myItem != null) {
+						result.add(east);
+						if (Map[east.X][east.Y] == '.') {
+							Map[east.X][east.Y] = '.';
+						} else {
+							Map[east.X][east.Y] = 'o';
+						}
+						// this.Move(east);
+					}
+				} else if (west != null) {
+					if (west.myItem != null) {
+						result.add(west);
+						if (Map[west.X][west.Y] == '.') {
+							Map[west.X][west.Y] = '.';
+						} else {
+							Map[west.X][west.Y] = 'o';
+						}
+						// this.Move(west);
+					}
+				} else if (north != null) {
+					if (north.myItem != null) {
+						result.add(north);
+						if (Map[north.X][north.Y] == '.') {
+							Map[north.X][north.Y] = '.';
+						} else {
+							Map[north.X][north.Y] = 'o';
+						}
+						// this.Move(north);
+					}
+				} else if (south != null) {
+
+					if (south.myItem != null) {
+						result.add(south);
+						if (Map[south.X][south.Y] == '.') {
+							Map[south.X][south.Y] = '.';
+						} else {
+							Map[south.X][south.Y] = 'o';
+						}
+						// this.Move(south);
+					}
+				}
+				System.out.println(currentLocation.X + " " + currentLocation.Y);
+				// this.Move(east)
+				// path.remove(currentLoc);
 			}
-			if (east.myItem != null) {
-				path.add(currentLoc);
-				this.Move(east);
-				this.findPath(currentLoc, Map, path, endLocation);
+
+			if (!result.isEmpty()) {
+				return result;
 			}
-			if (west.myItem != null) {
-				path.add(currentLoc);
-				this.Move(west);
-				this.findPath(currentLoc, Map, path, endLocation);
-			}
-			if (north.myItem != null) {
-				path.add(currentLoc);
-				this.Move(north);
-				this.findPath(currentLoc, Map, path, endLocation);
-			}
-			if (south.myItem != null) {
-				path.add(currentLoc);
-				this.Move(south);
-				this.findPath(currentLoc, Map, path, endLocation);
-			}
-			System.out.println(currentLoc.X + " " + currentLoc.Y);
-			//path.remove(currentLoc);
-		} catch (Exception e) {
+
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 		return result;

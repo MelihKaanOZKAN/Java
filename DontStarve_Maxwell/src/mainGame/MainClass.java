@@ -68,7 +68,10 @@ public class MainClass {
 		maxwell.printInventory();
 		Queue<Location> path = new LinkedList<Location>();
 		
-		maxwell.findPath(maxwell.location, Map, path, endLocation);
+		path = maxwell.findPath(maxwell.location, Map, endLocation);
+		
+		maxwell.Move(path);
+		maxwell.printPath();
 	}
 
 }
