@@ -18,7 +18,7 @@ public class Inventory {
 
 	protected void viewItems() {
 		try {
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 10; i++) {
 				System.out.println("Bölme " + i + " : ");
 				if (inventory.get(i).isEmpty()) {
 					System.out.println(" Bölme Boþ");

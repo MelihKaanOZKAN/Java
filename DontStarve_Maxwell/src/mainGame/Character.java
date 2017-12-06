@@ -294,21 +294,22 @@ public class Character {
 			Location east, west, north, south, currentLocation;
 			result.add(currentLoc);
 			while (!result.isEmpty()) {
-				boolean CanGo = false;
+				int tmp = 4;
 				currentLocation = result.poll();
 				east = currentLocation.east(Map);
 				west = currentLocation.west(Map);
 				north = currentLocation.north(Map);
 				south = currentLocation.south(Map);
-				System.out.println(currentLocation.toString() + " ");
+				System.out.println("CL: " + currentLocation.toString() + " ");
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
 				}
 				if (east != null) {
-					//System.out.println("E " + east.toString());
+
 					if (east.myItem != null) {
 						// System.out.println(east.myItem.name);
-						CanGo = true;
+						//System.out.println("E " + east.toString());
+						tmp--;
 						result.add(east);
 						if (Map[east.Y][east.X] == '.') {
 							Map[east.Y][east.X] = '.';
@@ -318,10 +319,11 @@ public class Character {
 					}
 				}
 				if (west != null) {
-					//System.out.println("W " + west.toString());
+
 					if (west.myItem != null) {
+						tmp--;
+						//System.out.println("W " + west.toString());
 						result.add(west);
-						CanGo = true;
 						if (Map[west.Y][west.X] == '.') {
 							Map[west.Y][west.X] = '.';
 						} else {
@@ -330,11 +332,11 @@ public class Character {
 					}
 				}
 				if (north != null) {
-					//System.out.println("N " + north.toString());
 					if (north.myItem != null) {
+						tmp--;
+						//System.out.println("N " + north.toString());
 						result.add(north);
-						CanGo = true;
-						//System.out.println(north.myItem.name);
+						//System.out.println("Nitem" +north.myItem.name);
 						if (Map[north.Y][north.X] == '.') {
 							Map[north.Y][north.X] = '.';
 						} else {
@@ -343,10 +345,11 @@ public class Character {
 					}
 				}
 				if (south != null) {
-					//System.out.println("S " + south.toString());
+
 					if (south.myItem != null) {
 						result.add(south);
-						CanGo = true;
+						//System.out.println("S " + south.toString());
+						tmp--;
 						if (Map[south.Y][south.X] == '.') {
 							Map[south.Y][south.X] = '.';
 						} else {
@@ -354,24 +357,17 @@ public class Character {
 						}
 					}
 				}
-				
-				if(!CanGo)
-				{
-					Location goTo = new Location(endLocation.X /2, endLocation.Y/2, null);
-					if(currentLocation.Y < goTo.Y)
-					{
+				System.out.println(currentLocation.toString() + " tmp: " + tmp);
+
+				if (tmp == 444) {
+					Location goTo = new Location(endLocation.X / 2, endLocation.Y / 2, null);
+					if (currentLocation.Y < goTo.Y) {
 						result.add(south);
-					}
-					else if(currentLocation.Y > goTo.Y)
-					{
+					} else if (currentLocation.Y > goTo.Y) {
 						result.add(north);
-					}
-					else if(currentLocation.X < goTo.X)
-					{
+					} else if (currentLocation.X < goTo.X) {
 						result.add(east);
-					}
-					else if(currentLocation.X > goTo.X)
-					{
+					} else if (currentLocation.X > goTo.X) {
 						result.add(west);
 					}
 				}
