@@ -292,71 +292,96 @@ public class Character {
 		Queue<Location> result = new LinkedList<Location>();
 		try {
 			Location east, west, north, south, currentLocation;
-
 			result.add(currentLoc);
 			while (!result.isEmpty()) {
+				boolean CanGo = false;
 				currentLocation = result.poll();
 				east = currentLocation.east(Map);
 				west = currentLocation.west(Map);
 				north = currentLocation.north(Map);
 				south = currentLocation.south(Map);
+				System.out.println(currentLocation.toString() + " ");
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
 				}
 				if (east != null) {
+					//System.out.println("E " + east.toString());
 					if (east.myItem != null) {
+						// System.out.println(east.myItem.name);
+						CanGo = true;
 						result.add(east);
-						if (Map[east.X][east.Y] == '.') {
-							Map[east.X][east.Y] = '.';
+						if (Map[east.Y][east.X] == '.') {
+							Map[east.Y][east.X] = '.';
 						} else {
-							Map[east.X][east.Y] = 'o';
+							Map[east.Y][east.X] = 'o';
 						}
-						// this.Move(east);
-					}
-				} else if (west != null) {
-					if (west.myItem != null) {
-						result.add(west);
-						if (Map[west.X][west.Y] == '.') {
-							Map[west.X][west.Y] = '.';
-						} else {
-							Map[west.X][west.Y] = 'o';
-						}
-						// this.Move(west);
-					}
-				} else if (north != null) {
-					if (north.myItem != null) {
-						result.add(north);
-						if (Map[north.X][north.Y] == '.') {
-							Map[north.X][north.Y] = '.';
-						} else {
-							Map[north.X][north.Y] = 'o';
-						}
-						// this.Move(north);
-					}
-				} else if (south != null) {
-
-					if (south.myItem != null) {
-						result.add(south);
-						if (Map[south.X][south.Y] == '.') {
-							Map[south.X][south.Y] = '.';
-						} else {
-							Map[south.X][south.Y] = 'o';
-						}
-						// this.Move(south);
 					}
 				}
-				System.out.println(currentLocation.X + " " + currentLocation.Y);
-				// this.Move(east)
-				// path.remove(currentLoc);
+				if (west != null) {
+					//System.out.println("W " + west.toString());
+					if (west.myItem != null) {
+						result.add(west);
+						CanGo = true;
+						if (Map[west.Y][west.X] == '.') {
+							Map[west.Y][west.X] = '.';
+						} else {
+							Map[west.Y][west.X] = 'o';
+						}
+					}
+				}
+				if (north != null) {
+					//System.out.println("N " + north.toString());
+					if (north.myItem != null) {
+						result.add(north);
+						CanGo = true;
+						//System.out.println(north.myItem.name);
+						if (Map[north.Y][north.X] == '.') {
+							Map[north.Y][north.X] = '.';
+						} else {
+							Map[north.Y][north.X] = 'o';
+						}
+					}
+				}
+				if (south != null) {
+					//System.out.println("S " + south.toString());
+					if (south.myItem != null) {
+						result.add(south);
+						CanGo = true;
+						if (Map[south.Y][south.X] == '.') {
+							Map[south.Y][south.X] = '.';
+						} else {
+							Map[south.Y][south.X] = 'o';
+						}
+					}
+				}
+				
+				if(!CanGo)
+				{
+					Location goTo = new Location(endLocation.X /2, endLocation.Y/2, null);
+					if(currentLocation.Y < goTo.Y)
+					{
+						result.add(south);
+					}
+					else if(currentLocation.Y > goTo.Y)
+					{
+						result.add(north);
+					}
+					else if(currentLocation.X < goTo.X)
+					{
+						result.add(east);
+					}
+					else if(currentLocation.X > goTo.X)
+					{
+						result.add(west);
+					}
+				}
 			}
 
 			if (!result.isEmpty()) {
 				return result;
 			}
 
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;

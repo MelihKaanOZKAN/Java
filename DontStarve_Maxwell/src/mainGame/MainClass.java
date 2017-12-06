@@ -12,14 +12,14 @@ public class MainClass {
 		try {
 			switch (loc) {
 			case '@': {
-				Location tmp = new Location(i, j, null);
+				Location tmp = new Location(j, i, null);
 				maxwell.location = tmp;
 				break;
 			}
 			
 			case 'W': {
 				Item item = new Item('W', "Tahta Kulübe");
-				Location tmp = new Location(i, j, item);
+				Location tmp = new Location(j, i, item);
 				endLocation = tmp;
 				break;
 			}
@@ -67,7 +67,6 @@ public class MainClass {
 		analysisLoc(Map);
 		maxwell.printInventory();
 		Queue<Location> path = new LinkedList<Location>();
-		
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
 		
 		maxwell.Move(path);

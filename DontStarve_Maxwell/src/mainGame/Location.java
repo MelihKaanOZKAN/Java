@@ -69,9 +69,9 @@ public class Location {
 	}
 
 	public Location north(char[][] Map) {
-		Location tmp = new Location(X - 1, Y, null);
-		if (tmp.X > 0 && tmp.Y > 0 && tmp.X <= Map.length && tmp.Y <= Map[0].length) {
-			tmp = getItem(Map[tmp.X][tmp.Y], tmp);
+		Location tmp = new Location(X, Y - 1, null);
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
 			return null;
@@ -79,9 +79,9 @@ public class Location {
 	}
 
 	public Location south(char[][] Map) {
-		Location tmp = new Location(X + 1, Y, null);
-		if (tmp.X > 0 && tmp.Y > 0 && tmp.X <= Map.length && tmp.Y <= Map[0].length) {
-			tmp = getItem(Map[tmp.X][tmp.Y], tmp);
+		Location tmp = new Location(X, Y + 1, null);
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
 			return null;
@@ -89,11 +89,9 @@ public class Location {
 	}
 
 	public Location east(char[][] Map) {
-		Location tmp = new Location(X, Y + 1, null);
-		 System.out.println("A:" +tmp.X + "A:" + tmp.Y + "A:" + Map[0].length + "A:"
-		 +Map.length);
-		if (tmp.X > 0 && tmp.Y > 0 && tmp.X <= Map.length && tmp.Y <= Map[0].length) {
-			tmp = getItem(Map[tmp.X][tmp.Y], tmp);
+		Location tmp = new Location(X + 1, Y, null);
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
 			return null;
@@ -101,12 +99,15 @@ public class Location {
 	}
 
 	public Location west(char[][] Map) {
-		Location tmp = new Location(X, Y - 1, null);
-		if (tmp.X > 0 && tmp.Y > 0 && tmp.X <= Map.length && tmp.Y <= Map[0].length) {
-			tmp = getItem(Map[tmp.X][tmp.Y], tmp);
+		Location tmp = new Location(X - 1, Y, null);
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
 			return null;
 		}
+	}
+	public String toString() {
+		return this.X + " " + this.Y;
 	}
 }
