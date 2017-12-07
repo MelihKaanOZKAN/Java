@@ -21,6 +21,15 @@ public class Location {
 		}
 	}
 
+	public boolean equal(Location loc)
+	{
+		boolean result = false;
+		if(this.X == loc.X && this.Y == loc.Y)
+		{
+			result = true;
+		}
+		return result;
+	}
 	private Location getItem(char symbol, Location loc) {
 		Location result = loc;
 		try {
@@ -50,7 +59,7 @@ public class Location {
 				break;
 			}
 			case 'A': {
-				result.myItem = new Item('A', "Anahtar");
+				result.myItem = new Item('A', "Anten");
 				break;
 			}
 			case 'J': {

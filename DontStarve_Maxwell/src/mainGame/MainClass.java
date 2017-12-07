@@ -70,7 +70,6 @@ public class MainClass {
 		//System.out.println(path.size());
 		maxwell.Move(path);
 		maxwell.printPath();
-		maxwell.printInventory();
 	}
 
 }

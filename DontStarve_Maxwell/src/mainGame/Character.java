@@ -154,7 +154,7 @@ public class Character {
 			Item[] straw2 = this.getItemFromInventory('V', 3);
 			if (straw1.length == 4 && straw2.length == 3) {
 				this.addItemToInventory(new Item('#', "Sal"));
-				correctPath.add("Sal");
+				correctPath.add("#");
 			} else {
 				for (int i = 0; i < straw1.length; i++) {
 					this.addItemToInventory(straw1[i]);
@@ -236,8 +236,15 @@ public class Character {
 
 	protected void Move(Queue<Location> path) {
 		try {
+			Location oldLoc, newloc;
 			while (!path.isEmpty()) {
-				Move(path.poll());
+				newloc = path.poll();
+				Move(newloc);
+				oldLoc = newloc;
+				if(!oldLoc.equal(this.location))
+				{
+					Move(newloc);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
