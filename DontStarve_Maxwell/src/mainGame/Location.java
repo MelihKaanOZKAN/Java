@@ -70,8 +70,16 @@ public class Location {
 
 	public Location north(char[][] Map) {
 		Location tmp = new Location(X, Y - 1, null);
-		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+
+		// System.out.println("N: " + this.X + " " + this.Y + " " + tmp.X+ " " + tmp.Y);
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X < Map[0].length && tmp.Y < Map.length) {
 			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
+
+			/*
+			 * for(int i = 0; i < Map.length; i++) { for(int j = 0; j < Map[0].length; j++)
+			 * { System.out.print(Map[i][j]); System.out.print(' '); }
+			 * System.out.println(""); } System.out.println("");
+			 */
 			return tmp;
 		} else {
 			return null;
@@ -80,7 +88,7 @@ public class Location {
 
 	public Location south(char[][] Map) {
 		Location tmp = new Location(X, Y + 1, null);
-		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X < Map[0].length && tmp.Y < Map.length) {
 			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
@@ -90,7 +98,7 @@ public class Location {
 
 	public Location east(char[][] Map) {
 		Location tmp = new Location(X + 1, Y, null);
-		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X < Map[0].length && tmp.Y < Map.length) {
 			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
@@ -100,13 +108,14 @@ public class Location {
 
 	public Location west(char[][] Map) {
 		Location tmp = new Location(X - 1, Y, null);
-		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X <= Map[0].length && tmp.Y <= Map.length) {
+		if (tmp.X >= 0 && tmp.Y >= 0 && tmp.X < Map[0].length && tmp.Y < Map.length) {
 			tmp = getItem(Map[tmp.Y][tmp.X], tmp);
 			return tmp;
 		} else {
 			return null;
 		}
 	}
+
 	public String toString() {
 		return this.X + " " + this.Y;
 	}

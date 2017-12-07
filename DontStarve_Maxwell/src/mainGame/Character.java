@@ -182,18 +182,19 @@ public class Character {
 
 	private String getStringofPath(Location oldLocation, Location newLocation) {
 		String result = "";
+		System.out.println(oldLocation.X + " " + oldLocation.Y + " " + newLocation.X + " " + newLocation.Y);
 		try {
 			// System.out.println(oldLocation.X + " " + oldLocation.Y);
 			// System.out.println(newLocation.X + " " + newLocation.Y);
 
 			if (oldLocation.X > newLocation.X) {
-				result += "u";
-			} else if (oldLocation.X < newLocation.X) {
-				result += "d";
-			} else if (oldLocation.Y < newLocation.Y) {
-				result += "r";
-			} else if (oldLocation.Y > newLocation.Y) {
 				result += "l";
+			} else if (oldLocation.X < newLocation.X) {
+				result += "r";
+			} else if (oldLocation.Y < newLocation.Y) {
+				result += "d";
+			} else if (oldLocation.Y > newLocation.Y) {
+				result += "u";
 			}
 			if (newLocation.myItem != null) {
 				result += newLocation.myItem.symbol;
@@ -258,7 +259,7 @@ public class Character {
 				if (location.myItem != null) {
 					inventory.addItemToPartition(location.myItem);
 				}
-				this.correctPath.add(this.getStringofPath(dest, location));
+				this.correctPath.add(this.getStringofPath(oldLocation, location));
 			} else {
 				if (!isTorchActive) {
 					System.out.println("Maxwell DEAD! :(");
@@ -290,27 +291,29 @@ public class Character {
 
 	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Location endLocation) {
 		Queue<Location> result = new LinkedList<Location>();
+		Queue<Location> temp = new LinkedList<Location>();
 		try {
 			Location east, west, north, south, currentLocation;
 			result.add(currentLoc);
-			while (!result.isEmpty()) {
+			temp.add(currentLoc);
+			while (!temp.isEmpty()) {
 				int tmp = 4;
-				currentLocation = result.poll();
+				currentLocation = temp.poll();
 				east = currentLocation.east(Map);
 				west = currentLocation.west(Map);
 				north = currentLocation.north(Map);
 				south = currentLocation.south(Map);
-				System.out.println("CL: " + currentLocation.toString() + " ");
+				boolean canAdd = true;
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
 				}
 				if (east != null) {
 
-					if (east.myItem != null) {
-						// System.out.println(east.myItem.name);
-						//System.out.println("E " + east.toString());
+					if (east.myItem != null && canAdd) {
 						tmp--;
 						result.add(east);
+						temp.add(east);
+						canAdd = false;
 						if (Map[east.Y][east.X] == '.') {
 							Map[east.Y][east.X] = '.';
 						} else {
@@ -320,10 +323,11 @@ public class Character {
 				}
 				if (west != null) {
 
-					if (west.myItem != null) {
+					if (west.myItem != null && canAdd) {
 						tmp--;
-						//System.out.println("W " + west.toString());
 						result.add(west);
+						temp.add(west);
+						canAdd = false;
 						if (Map[west.Y][west.X] == '.') {
 							Map[west.Y][west.X] = '.';
 						} else {
@@ -332,11 +336,11 @@ public class Character {
 					}
 				}
 				if (north != null) {
-					if (north.myItem != null) {
+					if (north.myItem != null && canAdd) {
 						tmp--;
-						//System.out.println("N " + north.toString());
 						result.add(north);
-						//System.out.println("Nitem" +north.myItem.name);
+						temp.add(north);
+						canAdd = false;
 						if (Map[north.Y][north.X] == '.') {
 							Map[north.Y][north.X] = '.';
 						} else {
@@ -346,9 +350,10 @@ public class Character {
 				}
 				if (south != null) {
 
-					if (south.myItem != null) {
+					if (south.myItem != null && canAdd) {
 						result.add(south);
-						//System.out.println("S " + south.toString());
+						temp.add(south);
+						canAdd = false;
 						tmp--;
 						if (Map[south.Y][south.X] == '.') {
 							Map[south.Y][south.X] = '.';
@@ -357,23 +362,25 @@ public class Character {
 						}
 					}
 				}
-				System.out.println(currentLocation.toString() + " tmp: " + tmp);
-
-				if (tmp == 444) {
-					Location goTo = new Location(endLocation.X / 2, endLocation.Y / 2, null);
+				if (tmp == 4) {
+					Location goTo = new Location(endLocation.X, endLocation.Y, null);
 					if (currentLocation.Y < goTo.Y) {
 						result.add(south);
+						temp.add(south);
 					} else if (currentLocation.Y > goTo.Y) {
 						result.add(north);
+						temp.add(north);
 					} else if (currentLocation.X < goTo.X) {
 						result.add(east);
+						temp.add(east);
 					} else if (currentLocation.X > goTo.X) {
 						result.add(west);
+						temp.add(west);
 					}
 				}
 			}
 
-			if (!result.isEmpty()) {
+			if (!temp.isEmpty()) {
 				return result;
 			}
 

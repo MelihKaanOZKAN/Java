@@ -53,7 +53,7 @@ public class MainClass {
 	public static void main(String[] args) {
 
 		char[][] Map = {
-				{ 'o', 'o', 'S', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
 						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
 				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
 						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
@@ -68,7 +68,7 @@ public class MainClass {
 		maxwell.printInventory();
 		Queue<Location> path = new LinkedList<Location>();
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
-		
+		//System.out.println(path.size());
 		maxwell.Move(path);
 		maxwell.printPath();
 	}
