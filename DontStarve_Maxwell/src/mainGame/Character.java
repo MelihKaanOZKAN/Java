@@ -12,7 +12,7 @@ public class Character {
 	protected int torchLife;
 	private Inventory inventory;
 	char symbol = '@';
-	Location location, oldLocation;
+	Location location, oldLocation, endLocation;
 	Queue<String> correctPath = new LinkedList<String>();
 	LinkedList<Location> necessaryItems = new LinkedList<Location>();
 	int[] necessaryItems_Distance;
@@ -65,9 +65,9 @@ public class Character {
 				isTorchActive = false;
 				getTorch();
 				if (this.isTorchActive) {
-					result = false;
-				} else {
 					result = true;
+				} else {
+					result = false;
 				}
 			} else {
 				result = true;
@@ -123,15 +123,15 @@ public class Character {
 		return result;
 	}
 
-	protected Item craftTorch() {
-		Item result = null;
+	protected void craftTorch() {
 		try {
 
 			Item[] straw1 = this.getItemFromInventory('S', 2);
 			Item[] straw2 = this.getItemFromInventory('T', 2);
 
 			if (straw1.length == 2 && straw2.length == 2) {
-				result = new Item('*', "Meþale");
+				this.addItemToInventory(new Item('*', "Meþale"));
+
 			} else {
 				for (int i = 0; i < straw1.length; i++) {
 					this.addItemToInventory(straw1[i]);
@@ -145,18 +145,16 @@ public class Character {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
-	protected Item craftRaft() {
-		Item result = null;
+	protected void craftRaft() {
 		try {
 
 			Item[] straw1 = this.getItemFromInventory('B', 4);
 			Item[] straw2 = this.getItemFromInventory('V', 3);
 			if (straw1.length == 4 && straw2.length == 3) {
-				result = new Item('#', "Sal");
-				correctPath.add("#");
+				this.addItemToInventory(new Item('#', "Sal"));
+				correctPath.add("Sal");
 			} else {
 				for (int i = 0; i < straw1.length; i++) {
 					this.addItemToInventory(straw1[i]);
@@ -169,7 +167,6 @@ public class Character {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
 	protected void printInventory() {
@@ -180,21 +177,34 @@ public class Character {
 		}
 	}
 
-	private String getStringofPath(Location oldLocation, Location newLocation) {
+	private String getStringofPath(Location oldLocation, Location newLocation, Location endLocation) {
 		String result = "";
-		System.out.println(oldLocation.X + " " + oldLocation.Y + " " + newLocation.X + " " + newLocation.Y);
 		try {
-			// System.out.println(oldLocation.X + " " + oldLocation.Y);
-			// System.out.println(newLocation.X + " " + newLocation.Y);
 
 			if (oldLocation.X > newLocation.X) {
-				result += "l";
+				if (newLocation.X == endLocation.X && newLocation.Y == endLocation.Y) {
+					result += "W";
+				} else {
+					result += "l";
+				}
 			} else if (oldLocation.X < newLocation.X) {
-				result += "r";
+				if (newLocation.X == endLocation.X && newLocation.Y == endLocation.Y) {
+					result += "W";
+				} else {
+					result += "r";
+				}
 			} else if (oldLocation.Y < newLocation.Y) {
-				result += "d";
+				if (newLocation.X == endLocation.X && newLocation.Y == endLocation.Y) {
+					result += "W";
+				} else {
+					result += "d";
+				}
 			} else if (oldLocation.Y > newLocation.Y) {
-				result += "u";
+				if (newLocation.X == endLocation.X && newLocation.Y == endLocation.Y) {
+					result += "W";
+				} else {
+					result += "u";
+				}
 			}
 			if (newLocation.myItem != null) {
 				result += newLocation.myItem.symbol;
@@ -210,6 +220,7 @@ public class Character {
 			Item result = null;
 			if (this.inventory.inventory.get(8).isEmpty()) {
 				craftTorch();
+				result = this.getItemFromInventory('*', 1)[0];
 			} else {
 				result = this.getItemFromInventory('*', 1)[0];
 			}
@@ -236,15 +247,12 @@ public class Character {
 	private void Move(Location dest) {
 		try {
 			if (CanMove()) {
-				if (!isTorchActive) {
-
-					oldLocation = location;
-					return;
-				}
 				if (dest.isWater) {
-					activeRaft = getItemFromInventory('#', 1)[0];
+					// System.out.println(activeRaft);
 					if (activeRaft == null) {
-						this.addItemToInventory(craftRaft());
+						craftRaft();
+						activeRaft = getItemFromInventory('#', 1)[0];
+						torchLife--;
 						return;
 					}
 				} else {
@@ -259,7 +267,7 @@ public class Character {
 				if (location.myItem != null) {
 					inventory.addItemToPartition(location.myItem);
 				}
-				this.correctPath.add(this.getStringofPath(oldLocation, location));
+				this.correctPath.add(this.getStringofPath(oldLocation, location, endLocation));
 			} else {
 				if (!isTorchActive) {
 					System.out.println("Maxwell DEAD! :(");
@@ -293,8 +301,8 @@ public class Character {
 		Queue<Location> result = new LinkedList<Location>();
 		Queue<Location> temp = new LinkedList<Location>();
 		try {
+			this.endLocation = endLocation;
 			Location east, west, north, south, currentLocation;
-			result.add(currentLoc);
 			temp.add(currentLoc);
 			while (!temp.isEmpty()) {
 				int tmp = 4;

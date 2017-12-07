@@ -65,12 +65,12 @@ public class MainClass {
 						'J', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
 
 		analysisLoc(Map);
-		maxwell.printInventory();
 		Queue<Location> path = new LinkedList<Location>();
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
 		//System.out.println(path.size());
 		maxwell.Move(path);
 		maxwell.printPath();
+		maxwell.printInventory();
 	}
 
 }
