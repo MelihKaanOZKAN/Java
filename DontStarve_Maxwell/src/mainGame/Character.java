@@ -14,8 +14,7 @@ public class Character {
 	char symbol = '@';
 	Location location, oldLocation, endLocation;
 	Queue<String> correctPath = new LinkedList<String>();
-	LinkedList<Location> necessaryItems = new LinkedList<Location>();
-	int[] necessaryItems_Distance;
+	static LinkedList<Location> necessaryItems = new LinkedList<Location>();
 	private Item activeRaft = null;
 
 	protected void printPath() {
@@ -87,39 +86,6 @@ public class Character {
 			err.printStackTrace();
 		}
 
-		return result;
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void CalcDistance() {
-		try {
-			necessaryItems_Distance = new int[necessaryItems.size()];
-			for (int i = 0; i < necessaryItems.size(); i++) {
-				necessaryItems_Distance[i] = calcDistance(necessaryItems.get(i), location);
-			}
-		} catch (Exception err) {
-			err.printStackTrace();
-		}
-	}
-
-	protected int GetNearest() {
-		int result = -1;
-		try {
-			int refDistance = necessaryItems_Distance[0];
-			int index = -1;
-			for (int i = 0; i < necessaryItems.size(); i++) {
-				if (refDistance > necessaryItems_Distance[i] && necessaryItems_Distance[i] != -1)
-					;
-				{
-					refDistance = necessaryItems_Distance[i];
-					index = i;
-				}
-			}
-			necessaryItems_Distance[index] = -1;
-			result = index;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return result;
 	}
 
@@ -293,8 +259,7 @@ public class Character {
 			boolean gas = !inventory.inventory.get(4).isEmpty();
 			boolean antenna = !inventory.inventory.get(7).isEmpty();
 			boolean key = !inventory.inventory.get(5).isEmpty();
-			if (generator && gas && antenna && key && currentLocation.X == endLocation.X
-					&& currentLocation.Y == endLocation.Y) {
+			if (generator && gas && antenna && key && currentLocation.equal(endLocation)) {
 				System.out.println("TRUE");
 				result = true;
 			}
@@ -303,7 +268,6 @@ public class Character {
 		}
 		return result;
 	}
-
 	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Location endLocation) {
 		Queue<Location> result = new LinkedList<Location>();
 		Queue<Location> temp = new LinkedList<Location>();
@@ -378,8 +342,28 @@ public class Character {
 					}
 				}
 				if (tmp == 4) {
-					Location goTo = new Location(endLocation.X, endLocation.Y, null);
-					if (currentLocation.Y < goTo.Y) {
+					Location goTo = null;
+					int nearest = 1000;
+					for(int i = 0; i < this.necessaryItems.size(); i++)
+					{
+						if(this.calcDistance(currentLocation, necessaryItems.get(i)) <= nearest)
+						{
+							goTo = necessaryItems.get(i);
+							nearest = this.calcDistance(currentLocation, necessaryItems.get(i));
+						}
+					}
+					System.out.println(currentLocation.toString()+ " " + necessaryItems.toString());
+					if(currentLocation.equal(goTo))
+					{
+						necessaryItems.remove(goTo);
+						System.out.println(necessaryItems.toString());
+					}
+					if(necessaryItems.isEmpty())
+					{
+						System.out.println("a");
+						goTo = new Location(endLocation.X, endLocation.Y, null);
+					}
+					 if (currentLocation.Y < goTo.Y) {
 						result.add(south);
 						temp.add(south);
 					} else if (currentLocation.Y > goTo.Y) {

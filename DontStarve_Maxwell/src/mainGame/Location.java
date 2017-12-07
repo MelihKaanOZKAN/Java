@@ -24,9 +24,12 @@ public class Location {
 	public boolean equal(Location loc)
 	{
 		boolean result = false;
-		if(this.X == loc.X && this.Y == loc.Y)
+		if(loc != null)
 		{
-			result = true;
+			if(this.X == loc.X && this.Y == loc.Y)
+			{
+				result = true;
+			}
 		}
 		return result;
 	}

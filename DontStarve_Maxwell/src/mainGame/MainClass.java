@@ -17,6 +17,31 @@ public class MainClass {
 				break;
 			}
 			
+			case 'Y': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('Y', "Yakıt Bidonu");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+			case 'H': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('H', "Anahtar");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+			case 'A': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('A', "Anten");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+			case 'J': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('J', "Jeneratör");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+			
 			case 'W': {
 				Item item = new Item('W', "Tahta Kulübe");
 				Location tmp = new Location(j, i, item);
@@ -43,26 +68,15 @@ public class MainClass {
 		}
 	}
 
-	private static Queue<String> pathFinder(char[][] Map ){
-		
-		return null;
-		
-	}
-	
 	
 	public static void main(String[] args) {
 
 		char[][] Map = {
-				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
-						'.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'H', 'o', 'o', 'o',
-						'o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'A', 'o', 'o', 'o',
-						'o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'o', 'o', 'o', 'o',
-						'J', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
+				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
+				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
+				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'H', 'o', 'o', 'o','o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
+				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'A', 'o', 'o', 'o','o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
+				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'o', 'o', 'W', 'o','J', 'o', 'o', '.', '.', '.', '.', '.', '.' } };
 
 		analysisLoc(Map);
 		Queue<Location> path = new LinkedList<Location>();
