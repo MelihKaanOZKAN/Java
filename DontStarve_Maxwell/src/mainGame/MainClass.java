@@ -67,7 +67,6 @@ public class MainClass {
 		analysisLoc(Map);
 		Queue<Location> path = new LinkedList<Location>();
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
-		//System.out.println(path.size());
 		maxwell.Move(path);
 		maxwell.printPath();
 	}
