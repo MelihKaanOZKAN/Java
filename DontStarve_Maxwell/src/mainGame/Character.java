@@ -81,11 +81,10 @@ public class Character {
 	private double calcDistance(Location calc, Location loc) {
 		double result = 0;
 		try {
-			result =  Math.sqrt(((calc.X - loc.X) ^ 2) - ((calc.Y - loc.Y) ^ 2));
+			result = Math.sqrt(Math.abs((calc.X - loc.X) ^ 2) - ((calc.Y - loc.Y) ^ 2));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -282,9 +281,10 @@ public class Character {
 
 	private LinkedList<Location> remove(LinkedList<Location> necessaryItems, Location loc) {
 		LinkedList<Location> result = necessaryItems;
-
+		System.out.println(loc.toString());
 		for (int i = 0; i < necessaryItems.size(); i++) {
-			if (this.Contains(necessaryItems, loc)) {
+			if (necessaryItems.get(i).equal(loc)) {
+				//System.out.println(i);
 				result.remove(i);
 			}
 		}
@@ -299,6 +299,8 @@ public class Character {
 			this.endLocation = endLocation;
 			Location east, west, north, south, currentLocation;
 			temp.add(currentLoc);
+			double nearest = 1000;
+			Location goTo = null;
 			while (!temp.isEmpty()) {
 				int tmp = 4;
 				currentLocation = temp.poll();
@@ -309,6 +311,7 @@ public class Character {
 
 				if (this.Contains(necessaryItems, currentLocation)) {
 					this.necessaryItems = this.remove(necessaryItems, currentLocation);
+					goTo = null;
 				}
 
 				boolean canAdd = true;
@@ -372,20 +375,19 @@ public class Character {
 				}
 
 				if (tmp == 4) {
-					Location goTo = null;
-					double nearest = 1000;
-					for (int i = 0; i < this.necessaryItems.size(); i++) {
-						double distance = this.calcDistance(currentLocation, necessaryItems.get(i)) ;
-						if (distance< nearest) {
-							goTo = necessaryItems.get(i);
-							nearest = distance;
+					if (goTo == null) {
+						for (int i = 0; i < this.necessaryItems.size(); i++) {
+							double distance = this.calcDistance(currentLocation, necessaryItems.get(i));
+							if (distance < nearest) {
+								goTo = necessaryItems.get(i);
+								nearest = distance;
+							}
 						}
 					}
+					System.out.println(this.necessaryItems.toString());
 					if (necessaryItems.isEmpty()) {
 						goTo = new Location(endLocation.X, endLocation.Y, null);
 					}
-					// System.out.println(nearest +" " + currentLocation.toString()+ " " +
-					// goTo.toString() + " "+ necessaryItems.toString());
 					if (currentLocation.Y < goTo.Y) {
 						result.add(south);
 						temp.add(south);
@@ -400,6 +402,8 @@ public class Character {
 						temp.add(west);
 					}
 				}
+
+				System.out.println(currentLocation.toString() + "--"+ this.necessaryItems.toString());
 			}
 
 			if (!temp.isEmpty()) {
