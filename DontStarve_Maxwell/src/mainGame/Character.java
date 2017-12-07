@@ -78,14 +78,14 @@ public class Character {
 		return result;
 	}
 
-	private int calcDistance(Location calc, Location loc) {
-		int result = 0;
+	private double calcDistance(Location calc, Location loc) {
+		double result = 0;
 		try {
-			result = (int) Math.sqrt((calc.X - loc.X) ^ 2 - (calc.Y - loc.Y) ^ 2);
+			result =  Math.sqrt(((calc.X - loc.X) ^ 2) - ((calc.Y - loc.Y) ^ 2));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
-
+		System.out.println(result);
 		return result;
 	}
 
@@ -207,8 +207,7 @@ public class Character {
 				newloc = path.poll();
 				Move(newloc);
 				oldLoc = newloc;
-				if(!oldLoc.equal(this.location))
-				{
+				if (!oldLoc.equal(this.location)) {
 					Move(newloc);
 				}
 			}
@@ -268,36 +267,31 @@ public class Character {
 		}
 		return result;
 	}
-	
-	private boolean Contains(LinkedList<Location> necessaryItems, Location loc)
-	{
+
+	private boolean Contains(LinkedList<Location> necessaryItems, Location loc) {
 		boolean result = false;
-			
-			for(int i= 0; i < necessaryItems.size(); i++)
-			{
-				if(necessaryItems.get(i).equal(loc))
-				{
-					result = true;
-				}
+
+		for (int i = 0; i < necessaryItems.size(); i++) {
+			if (necessaryItems.get(i).equal(loc)) {
+				result = true;
 			}
-		
+		}
+
 		return result;
 	}
-	
-	private LinkedList<Location> remove(LinkedList<Location> necessaryItems, Location loc)
-	{
-		LinkedList<Location>  result = necessaryItems;
-			
-			for(int i= 0; i < necessaryItems.size(); i++)
-			{
-				if(this.Contains(necessaryItems, loc))
-				{
-					result.remove(i);
-				}
+
+	private LinkedList<Location> remove(LinkedList<Location> necessaryItems, Location loc) {
+		LinkedList<Location> result = necessaryItems;
+
+		for (int i = 0; i < necessaryItems.size(); i++) {
+			if (this.Contains(necessaryItems, loc)) {
+				result.remove(i);
 			}
-		
+		}
+
 		return result;
 	}
+
 	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Location endLocation) {
 		Queue<Location> result = new LinkedList<Location>();
 		Queue<Location> temp = new LinkedList<Location>();
@@ -313,11 +307,10 @@ public class Character {
 				north = currentLocation.north(Map);
 				south = currentLocation.south(Map);
 
-				if(this.Contains(necessaryItems, currentLocation))
-				{
+				if (this.Contains(necessaryItems, currentLocation)) {
 					this.necessaryItems = this.remove(necessaryItems, currentLocation);
 				}
-				
+
 				boolean canAdd = true;
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
@@ -377,24 +370,23 @@ public class Character {
 						}
 					}
 				}
-					 
+
 				if (tmp == 4) {
 					Location goTo = null;
-					int nearest = 1000;
-					for(int i = 0; i < this.necessaryItems.size(); i++)
-					{
-						if(this.calcDistance(currentLocation, necessaryItems.get(i)) < nearest)
-						{
+					double nearest = 1000;
+					for (int i = 0; i < this.necessaryItems.size(); i++) {
+						double distance = this.calcDistance(currentLocation, necessaryItems.get(i)) ;
+						if (distance< nearest) {
 							goTo = necessaryItems.get(i);
-							nearest = this.calcDistance(currentLocation, necessaryItems.get(i));
+							nearest = distance;
 						}
 					}
-					if(necessaryItems.isEmpty())
-					{
+					if (necessaryItems.isEmpty()) {
 						goTo = new Location(endLocation.X, endLocation.Y, null);
 					}
-					//System.out.println(nearest +" " + currentLocation.toString()+ " " + goTo.toString() + " "+ necessaryItems.toString());
-					 if (currentLocation.Y < goTo.Y) {
+					// System.out.println(nearest +" " + currentLocation.toString()+ " " +
+					// goTo.toString() + " "+ necessaryItems.toString());
+					if (currentLocation.Y < goTo.Y) {
 						result.add(south);
 						temp.add(south);
 					} else if (currentLocation.Y > goTo.Y) {
