@@ -14,7 +14,7 @@ public class Character {
 	char symbol = '@';
 	Location location, oldLocation, endLocation;
 	Queue<String> correctPath = new LinkedList<String>();
-	static LinkedList<Location> necessaryItems = new LinkedList<Location>();
+	LinkedList<Location> necessaryItems = new LinkedList<Location>();
 	private Item activeRaft = null;
 
 	protected void printPath() {
@@ -268,6 +268,36 @@ public class Character {
 		}
 		return result;
 	}
+	
+	private boolean Contains(LinkedList<Location> necessaryItems, Location loc)
+	{
+		boolean result = false;
+			
+			for(int i= 0; i < necessaryItems.size(); i++)
+			{
+				if(necessaryItems.get(i).equal(loc))
+				{
+					result = true;
+				}
+			}
+		
+		return result;
+	}
+	
+	private LinkedList<Location> remove(LinkedList<Location> necessaryItems, Location loc)
+	{
+		LinkedList<Location>  result = necessaryItems;
+			
+			for(int i= 0; i < necessaryItems.size(); i++)
+			{
+				if(this.Contains(necessaryItems, loc))
+				{
+					result.remove(i);
+				}
+			}
+		
+		return result;
+	}
 	protected Queue<Location> findPath(Location currentLoc, char[][] Map, Location endLocation) {
 		Queue<Location> result = new LinkedList<Location>();
 		Queue<Location> temp = new LinkedList<Location>();
@@ -282,6 +312,12 @@ public class Character {
 				west = currentLocation.west(Map);
 				north = currentLocation.north(Map);
 				south = currentLocation.south(Map);
+
+				if(this.Contains(necessaryItems, currentLocation))
+				{
+					this.necessaryItems = this.remove(necessaryItems, currentLocation);
+				}
+				
 				boolean canAdd = true;
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
@@ -341,28 +377,23 @@ public class Character {
 						}
 					}
 				}
+					 
 				if (tmp == 4) {
 					Location goTo = null;
 					int nearest = 1000;
 					for(int i = 0; i < this.necessaryItems.size(); i++)
 					{
-						if(this.calcDistance(currentLocation, necessaryItems.get(i)) <= nearest)
+						if(this.calcDistance(currentLocation, necessaryItems.get(i)) < nearest)
 						{
 							goTo = necessaryItems.get(i);
 							nearest = this.calcDistance(currentLocation, necessaryItems.get(i));
 						}
 					}
-					System.out.println(currentLocation.toString()+ " " + necessaryItems.toString());
-					if(currentLocation.equal(goTo))
-					{
-						necessaryItems.remove(goTo);
-						System.out.println(necessaryItems.toString());
-					}
 					if(necessaryItems.isEmpty())
 					{
-						System.out.println("a");
 						goTo = new Location(endLocation.X, endLocation.Y, null);
 					}
+					//System.out.println(nearest +" " + currentLocation.toString()+ " " + goTo.toString() + " "+ necessaryItems.toString());
 					 if (currentLocation.Y < goTo.Y) {
 						result.add(south);
 						temp.add(south);
