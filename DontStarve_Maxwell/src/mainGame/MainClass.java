@@ -69,7 +69,7 @@ public class MainClass {
 				maxwell.necessaryItems.add(tmp);
 				break;
 			}
-			
+
 			case 'W': {
 				Item item = new Item('W', "Tahta Kulübe");
 				Location tmp = new Location(j, i, item);
@@ -86,8 +86,7 @@ public class MainClass {
 	private static void analysisLoc(char[][] map) {
 		try {
 			for (int i = 0; i < map.length; i++) {
-				for(int j = 0; j < map[i].length; j++)
-				{
+				for (int j = 0; j < map[i].length; j++) {
 					doAnalysis(i, j, map[i][j]);
 				}
 			}
@@ -96,60 +95,51 @@ public class MainClass {
 		}
 	}
 
-	private static char[][] readMap(String path){
+	@SuppressWarnings("resource")
+	private static char[][] readMap(String path) {
 		char[][] result = null;
-		
+
 		try {
 			File file = new File(path);
 			BufferedReader br = new BufferedReader(new FileReader(file));
-			
-			String mainMap ="";
-			for(String line; (line = br.readLine()) != null; ) {
-		       mainMap += line;
-		       mainMap += "-";
-		    }
-					
+
+			String mainMap = "";
+			for (String line; (line = br.readLine()) != null;) {
+				mainMap += line;
+				mainMap += "-";
+			}
+
 			String[] tmp = mainMap.split("-");
 			int x = tmp[0].length();
 			int y = tmp.length;
 			result = new char[y][x];
-			for(int i= 0; i < y; i++)
-			{
-				
+			for (int i = 0; i < y; i++) {
 				result[i] = tmp[i].toCharArray();
 			}
-		}catch (Exception err) {
+		} catch (Exception err) {
 			err.printStackTrace();
 		}
-		
-		
+
 		return result;
 	}
+
 	public static void main(String[] args) {
 
-		System.out.println("Maxwell Carter kendini bir adada zifiri karanlığın içinde bulur.\r\n" + 
-				"Yanında sadece bir meşale vardır ve meşalesiz ilerleyememektedir.\r\n" + 
-				"Adalar takımından kurtulabilmesi için radyo vericisinden dış dünyaya\r\n" + 
-				"yardım sinyali göndermeyi akıl eder. Ancak radyo vericisi kilitli bir tahta\r\n" + 
-				"kulübe içerisindedir. Bu vericiyi çalıştırabilmek için jeneratör, yakıt ve\r\n" + 
-				"anten ile kulübeyi açmak için bir anahtar gerekmektedir...");
-		
-		System.out.println("\n\n\nGerekli malzemeleri toplamak için aşağıdaki yolu izledi.. ");
-		char[][] Map = {
-				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'H', 'o', 'o', 'o','o', 'o', 'A', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'o', 'o', 'o', 'o','o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'J', 'o', 'o', 'o', 'o','o', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
+		System.out.println("Maxwell Carter kendini bir adada zifiri karanlığın içinde bulur.\r\n"
+				+ "Yanında sadece bir meşale vardır ve meşalesiz ilerleyememektedir.\r\n"
+				+ "Adalar takımından kurtulabilmesi için radyo vericisinden dış dünyaya\r\n"
+				+ "yardım sinyali göndermeyi akıl eder. Ancak radyo vericisi kilitli bir tahta\r\n"
+				+ "kulübe içerisindedir. Bu vericiyi çalıştırabilmek için jeneratör, yakıt ve\r\n"
+				+ "anten ile kulübeyi açmak için bir anahtar gerekmektedir...");
 
-		Map = readMap("C:\\Map.txt");
+		System.out.println("\n\n\nGerekli malzemeleri toplamak için aşağıdaki yolu izledi.. ");
+		char[][] Map;
+		Map = readMap("C:\\Map.txt"); // Dosyadan Harita Okuma
 		analysisLoc(Map);
 		Queue<Location> path = new LinkedList<Location>();
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
 		maxwell.Move(path);
 		maxwell.printPath();
-		//maxwell.printInventory();
 	}
 
-	
 }
