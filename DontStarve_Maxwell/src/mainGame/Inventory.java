@@ -39,6 +39,7 @@ public class Inventory {
 			switch (item.symbol) {
 			case 'S': {
 				inventory.get(0).add(item);
+				//System.out.println("In");
 				break;
 			}
 			case 'T': {
@@ -88,23 +89,32 @@ public class Inventory {
 		try {
 			switch (symbol) {
 			case 'S': {
-				result = (Item) inventory.get(0).getLast();
-				inventory.get(0).removeLast();
+				if(inventory.get(0).size() != 0)
+				{
+					result =  (Item) inventory.get(0).removeLast();
+					//System.out.println("Out");
+				}
 				break;
 			}
 			case 'T': {
-				result = (Item) inventory.get(1).getLast();
-				inventory.get(1).removeLast();
+				if(inventory.get(1).size() != 0)
+				{
+					result =  (Item) inventory.get(1).removeLast();
+				}
 				break;
 			}
 			case 'B': {
-				result = (Item) inventory.get(2).getLast();
-				inventory.get(2).removeLast();
+				if(inventory.get(2).size() != 0)
+				{
+					result =  (Item) inventory.get(2).removeLast();
+				}
 				break;
 			}
 			case 'V': {
-				result = (Item) inventory.get(3).getLast();
-				inventory.get(3).removeLast();
+				if(inventory.get(3).size() != 0)
+				{
+					result =  (Item) inventory.get(3).removeLast();
+				}
 				break;
 			}
 			case 'Y': {
@@ -128,8 +138,10 @@ public class Inventory {
 				break;
 			}
 			case '*': {
-				result = (Item) inventory.get(8).getLast();
-				inventory.get(8).removeLast();
+				if(inventory.get(8).size() != 0)
+				{
+					result =  (Item) inventory.get(8).removeLast();
+				}
 				break;
 			}
 			case '#': {

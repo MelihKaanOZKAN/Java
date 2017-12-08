@@ -1,9 +1,8 @@
 package mainGame;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.Random;
 
 public class Character {
 
@@ -21,11 +20,43 @@ public class Character {
 		try {
 
 			System.out.println(correctPath.toString());
+			didHeSurvive();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
 	}
-
+	private void didHeSurvive() {
+		try {
+				Random rnd = new Random();
+				int chance = rnd.nextInt(10);
+				if(chance >= 5)
+				{
+					System.out.println("\n\t Maxwell kurtuldu.");
+				}
+				else
+				{
+					int chance2 = rnd.nextInt(2);
+					switch(chance2)
+					{
+						case 0:{
+							System.out.println("\n\t Maxwell açlýktan öldü çünkü anten bozuktu.");
+							break;
+						}
+						case 1:{
+							System.out.println("\n\t Maxwell açlýktan öldü çünkü jeneratör bozuktu.");
+							break;
+						}
+						case 2:{
+							System.out.println("\n\t Maxwell açlýktan öldü çünkü kimse cevap vermedi.");
+							break;
+						}
+					}
+				}
+				
+		}catch (Exception err) {
+			err.printStackTrace();
+		}
+	}
 	public Character(String name) {
 		try {
 			this.name = name;
@@ -81,7 +112,7 @@ public class Character {
 	private double calcDistance(Location calc, Location loc) {
 		double result = 0;
 		try {
-			result = Math.sqrt(Math.abs((calc.X - loc.X) ^ 2) - ((calc.Y - loc.Y) ^ 2));
+			result = Math.sqrt(Math.abs(Math.pow((calc.X - loc.X),2) + Math.pow((calc.Y - loc.Y),2)));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -90,10 +121,8 @@ public class Character {
 
 	protected void craftTorch() {
 		try {
-
 			Item[] straw1 = this.getItemFromInventory('S', 2);
 			Item[] straw2 = this.getItemFromInventory('T', 2);
-
 			if (straw1.length == 2 && straw2.length == 2) {
 				this.addItemToInventory(new Item('*', "Meþale"));
 
@@ -207,6 +236,7 @@ public class Character {
 				Move(newloc);
 				oldLoc = newloc;
 				if (!oldLoc.equal(this.location)) {
+					newloc.myItem = null;
 					Move(newloc);
 				}
 			}
@@ -219,12 +249,15 @@ public class Character {
 		try {
 			if (CanMove()) {
 				if (dest.isWater) {
-					// System.out.println(activeRaft);
 					if (activeRaft == null) {
-						craftRaft();
 						activeRaft = getItemFromInventory('#', 1)[0];
-						torchLife--;
-						return;
+						if(activeRaft == null)
+						{
+							craftRaft();
+							activeRaft = getItemFromInventory('#', 1)[0];
+							torchLife--;
+							return;
+						}
 					}
 				} else {
 					if (activeRaft != null) {
@@ -241,7 +274,7 @@ public class Character {
 				this.correctPath.add(this.getStringofPath(oldLocation, location, endLocation));
 			} else {
 				if (!isTorchActive) {
-					System.out.println("Maxwell DEAD! :(");
+					System.out.println("Maxwell Karanlýkta Kalýp Öldü. :(");
 					System.exit(0);
 				}
 			}
@@ -258,7 +291,6 @@ public class Character {
 			boolean antenna = !inventory.inventory.get(7).isEmpty();
 			boolean key = !inventory.inventory.get(5).isEmpty();
 			if (generator && gas && antenna && key && currentLocation.equal(endLocation)) {
-				System.out.println("TRUE");
 				result = true;
 			}
 		} catch (Exception e) {
@@ -281,7 +313,6 @@ public class Character {
 
 	private LinkedList<Location> remove(LinkedList<Location> necessaryItems, Location loc) {
 		LinkedList<Location> result = necessaryItems;
-		System.out.println(loc.toString());
 		for (int i = 0; i < necessaryItems.size(); i++) {
 			if (necessaryItems.get(i).equal(loc)) {
 				//System.out.println(i);
@@ -318,7 +349,7 @@ public class Character {
 				if (this.isEnd(Map, currentLocation, endLocation)) {
 					break;
 				}
-				if (east != null) {
+				/*if (east != null) {
 
 					if (east.myItem != null && canAdd) {
 						tmp--;
@@ -372,38 +403,63 @@ public class Character {
 							Map[south.Y][south.X] = 'o';
 						}
 					}
-				}
+				}*/
 
 				if (tmp == 4) {
 					if (goTo == null) {
 						for (int i = 0; i < this.necessaryItems.size(); i++) {
 							double distance = this.calcDistance(currentLocation, necessaryItems.get(i));
-							if (distance < nearest) {
+							if (distance <= nearest) {
 								goTo = necessaryItems.get(i);
 								nearest = distance;
 							}
+								if(this.necessaryItems.size() == 1)
+							{
+								goTo = necessaryItems.get(0);
+							}
 						}
+						nearest = 1000;
 					}
-					System.out.println(this.necessaryItems.toString());
-					if (necessaryItems.isEmpty()) {
-						goTo = new Location(endLocation.X, endLocation.Y, null);
+					if (this.necessaryItems.isEmpty()) {
+						goTo = endLocation;
 					}
-					if (currentLocation.Y < goTo.Y) {
-						result.add(south);
-						temp.add(south);
-					} else if (currentLocation.Y > goTo.Y) {
-						result.add(north);
-						temp.add(north);
-					} else if (currentLocation.X < goTo.X) {
+					
+					if (currentLocation.X < goTo.X) {
 						result.add(east);
 						temp.add(east);
+						if (Map[east.Y][east.X] == '.') {
+							Map[east.Y][east.X] = '.';
+						} else {
+							Map[east.Y][east.X] = 'o';
+						}
 					} else if (currentLocation.X > goTo.X) {
 						result.add(west);
 						temp.add(west);
+						if (Map[west.Y][west.X] == '.') {
+							Map[west.Y][west.X] = '.';
+						} else {
+							Map[west.Y][west.X] = 'o';
+						}
+					} else if (currentLocation.Y < goTo.Y) {
+						result.add(south);
+						temp.add(south);
+						if (Map[south.Y][south.X] == '.') {
+							Map[south.Y][south.X] = '.';
+						} else {
+							Map[south.Y][south.X] = 'o';
+						}
+					} else if (currentLocation.Y > goTo.Y) {
+						result.add(north);
+						temp.add(north);
+						if (Map[north.Y][north.X] == '.') {
+							Map[north.Y][north.X] = '.';
+						} else {
+							Map[north.Y][north.X] = 'o';
+						}
 					}
 				}
 
-				System.out.println(currentLocation.toString() + "--"+ this.necessaryItems.toString());
+				//System.out.println(currentLocation.toString() + "--"+ this.necessaryItems.toString());
 			}
 
 			if (!temp.isEmpty()) {

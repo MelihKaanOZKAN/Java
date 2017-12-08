@@ -1,5 +1,8 @@
 package mainGame;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,7 +19,32 @@ public class MainClass {
 				maxwell.location = tmp;
 				break;
 			}
-			
+			case 'S': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('S', "Saman Destesi");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+
+			case 'T': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('T', "Çubuk");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+			case 'B': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('B', "Bambu");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
+
+			case 'V': {
+				Location tmp = new Location(j, i, null);
+				tmp.myItem = new Item('V', "Sarmaşık");
+				maxwell.necessaryItems.add(tmp);
+				break;
+			}
 			case 'Y': {
 				Location tmp = new Location(j, i, null);
 				tmp.myItem = new Item('Y', "Yakıt Bidonu");
@@ -68,21 +96,60 @@ public class MainClass {
 		}
 	}
 
-	
+	private static char[][] readMap(String path){
+		char[][] result = null;
+		
+		try {
+			File file = new File(path);
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			
+			String mainMap ="";
+			for(String line; (line = br.readLine()) != null; ) {
+		       mainMap += line;
+		       mainMap += "-";
+		    }
+					
+			String[] tmp = mainMap.split("-");
+			int x = tmp[0].length();
+			int y = tmp.length;
+			result = new char[y][x];
+			for(int i= 0; i < y; i++)
+			{
+				
+				result[i] = tmp[i].toCharArray();
+			}
+		}catch (Exception err) {
+			err.printStackTrace();
+		}
+		
+		
+		return result;
+	}
 	public static void main(String[] args) {
 
+		System.out.println("Maxwell Carter kendini bir adada zifiri karanlığın içinde bulur.\r\n" + 
+				"Yanında sadece bir meşale vardır ve meşalesiz ilerleyememektedir.\r\n" + 
+				"Adalar takımından kurtulabilmesi için radyo vericisinden dış dünyaya\r\n" + 
+				"yardım sinyali göndermeyi akıl eder. Ancak radyo vericisi kilitli bir tahta\r\n" + 
+				"kulübe içerisindedir. Bu vericiyi çalıştırabilmek için jeneratör, yakıt ve\r\n" + 
+				"anten ile kulübeyi açmak için bir anahtar gerekmektedir...");
+		
+		System.out.println("\n\n\nGerekli malzemeleri toplamak için aşağıdaki yolu izledi.. ");
 		char[][] Map = {
 				{ 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'B', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
 				{ '@', 'S', 'T', 'T', 'S', 'o', 'o', 'o', 'o', 'V', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.','.', '.', '.', '.', '.', '.', '.', '.', '.' },
-				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'o', 'o', 'o', 'o','o', 'J', 'o', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'o', 'o', 'o', 'A','o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
-				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'W', 'o', 'o', 'o', 'o','o', 'o', 'H', '.', '.', '.', '.', '.', '.' } };
+				{ 'o', 'o', 'o', 'o', 'Y', 'B', 'V', 'B', 'V', 'B', '.', '.', '.', '.', '.', 'S', 'H', 'o', 'o', 'o','o', 'o', 'A', '.', '.', '.', '.', '.', '.' },
+				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'o', 'o', 'o', 'o', 'o','o', 'o', 'o', '.', '.', '.', '.', '.', '.' },
+				{ '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'J', 'o', 'o', 'o', 'o','o', 'o', 'W', '.', '.', '.', '.', '.', '.' } };
 
+		Map = readMap("C:\\Map.txt");
 		analysisLoc(Map);
 		Queue<Location> path = new LinkedList<Location>();
 		path = maxwell.findPath(maxwell.location, Map, endLocation);
 		maxwell.Move(path);
 		maxwell.printPath();
+		//maxwell.printInventory();
 	}
 
+	
 }
