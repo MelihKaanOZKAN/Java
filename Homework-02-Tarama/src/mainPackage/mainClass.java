@@ -33,6 +33,10 @@ public class mainClass {
 					// System.out.println(Ids.get(0) + " " + Ids.get(i) + " " + index);
 					graph.addRelation(Ids.get(0), Ids.get(i), index);
 				}
+				if(Ids.size() == 1)
+				{
+					graph.addRelation(Ids.get(0), Ids.get(0), index);
+				}
 				Ids.removeFirst();
 			}
 		}
@@ -71,7 +75,7 @@ public class mainClass {
 		File file = new File("C:\\graphdata.txt");
 		Graph test = getGraphFromFile(file);
 		
-		test.print();
+		//test.print();
 		
 	}
 

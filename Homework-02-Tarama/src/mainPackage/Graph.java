@@ -59,4 +59,7 @@ public class Graph {
 		}
 	}
 
+	public void findPath(int from, int to) {
+		
+	}
 }
