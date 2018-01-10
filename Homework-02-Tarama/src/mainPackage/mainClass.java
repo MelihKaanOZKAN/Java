@@ -81,7 +81,11 @@ public class mainClass {
 
 		File file = new File("C:\\graphdata.txt");
 		Graph graph = getGraphFromFile(file);
-		// graph.print();
+		/*S
+		 * System.out.println("Oluþturulan Matris: ");
+		 *  graph.print();
+		 */
+		
 		Scanner input = new Scanner(System.in);
 		System.out.print("1. Oyuncu Adýný Giriniz: ");
 		String name1 = input.nextLine();
