@@ -91,17 +91,18 @@ public class mainClass {
 
 		graph.print();
 
-		System.out.println("Çýkmak için ilk kiþi adýna 'bitir' yazýnýz.");
-		System.out.println("GraphData.txt'yi tekrar okumak için ilk kiþi adýna 'yenile' yazýnýz.");
+		System.out.println("Çýkmak için ilk kiþi adýna 'bitir' yazýnýz.\n");
+		System.out.println("GraphData.txt'yi tekrar okumak için ilk kiþi adýna 'yenile' yazýnýz.\n");
 		while (true) {
 			Scanner input = new Scanner(System.in);
 			System.out.print("1. Oyuncu Adýný Giriniz: ");
 			String name1 = input.nextLine();
 			if (name1.equalsIgnoreCase("bitir")) {
 				break;
-			}if (name1.equalsIgnoreCase("yenile")) {
+			}
+			if (name1.equalsIgnoreCase("yenile")) {
 				graph = getGraphFromFile(file);
-				System.out.println("Okuma tamamlandý");
+				System.out.println("\nOkuma tamamlandý\n");
 				graph.print();
 				continue;
 			}
@@ -117,7 +118,7 @@ public class mainClass {
 				System.out.println(name2 + " adlý oyuncu tanýmlý deðil.");
 				continue;
 			}
-			PathClass path = graph.findPath(from, to, new LinkedList<Integer>());
+			PathClass path = graph.findPath(from, to, new LinkedList<Integer>(), from);
 			if (path != null) {
 				for (int i = 1; i < path.path.size(); i++) {
 					String Name1 = graph.neighbors.get(path.path.get(i - 1));
