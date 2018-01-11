@@ -48,9 +48,18 @@ public class Graph {
 			System.out.println(i +". sýradaki oyuncu " + this.neighbors.get(i));
 		}
 	}
+	public void printWeights()
+	{
+		System.out.println("Filmlerin listesi");
+		for(int i = 1; i < this.weights.size(); i++)
+		{
+			System.out.println(i +". sýradaki film " + this.weights.get(i));
+		}
+	}
 	public void print() {
 		try {
 			this.printNeighbors();
+			this.printWeights();
 			System.out.println("");
 			System.out.println("Oluþturulan Matris: ");
 			for(int i = 0; i < this.relationships.length; i++)
@@ -83,7 +92,6 @@ public class Graph {
 				connections.add(i);
 			}
 		}
-		
 		 LinkedList<Integer> connections_ = new  LinkedList<Integer>();
 		for(int i = 1; i < this.relationships[to].length; i++)
 		{
@@ -109,7 +117,7 @@ public class Graph {
 					result.path.addLast(to);
 				}
 				else {
-					int from_ = connections.pop();
+					int from_ = connections.getLast();
 					result = result.mergePath(findPath(from_, to, connections).path);
 				}
 		}

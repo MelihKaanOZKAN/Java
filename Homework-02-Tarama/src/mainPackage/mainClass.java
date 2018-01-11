@@ -92,12 +92,18 @@ public class mainClass {
 		graph.print();
 
 		System.out.println("Çýkmak için ilk kiþi adýna 'bitir' yazýnýz.");
+		System.out.println("GraphData.txt'yi tekrar okumak için ilk kiþi adýna 'yenile' yazýnýz.");
 		while (true) {
 			Scanner input = new Scanner(System.in);
 			System.out.print("1. Oyuncu Adýný Giriniz: ");
 			String name1 = input.nextLine();
 			if (name1.equalsIgnoreCase("bitir")) {
 				break;
+			}if (name1.equalsIgnoreCase("yenile")) {
+				graph = getGraphFromFile(file);
+				System.out.println("Okuma tamamlandý");
+				graph.print();
+				continue;
 			}
 			System.out.print("2. Oyuncu Adýný Giriniz: ");
 			String name2 = input.nextLine();
