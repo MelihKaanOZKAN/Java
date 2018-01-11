@@ -14,10 +14,15 @@ public class Graph {
 			this.neighbors = neighbors;
 			this.weights = new LinkedList<String>();
 			this.weights.addLast("0");
-			this.relationships = new int[this.neighbors.size()-1][this.neighbors.size()-1];
+			this.relationships = new int[this.neighbors.size()][this.neighbors.size()];
 			// set all relationships to 0
 			for (int i = 0; i < this.relationships.length; i++) {
 				this.relationships[i][i] = 0;
+			}
+			for(int i = 1; i < this.neighbors.size(); i++)
+			{
+				this.relationships[i][0] = i;
+				this.relationships[0][i] = i;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -28,8 +33,8 @@ public class Graph {
 		try {
 			//System.out.println("From: " + from + " To: " + to + " Index: " + index);
 			// set relationships
-			this.relationships[from-1][to-1] = index;
-			this.relationships[to-1][from-1] = index;
+			this.relationships[from][to] = index;
+			this.relationships[to][from] = index;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +45,7 @@ public class Graph {
 		System.out.println("Oyuncularýn listesi");
 		for(int i = 1; i < this.neighbors.size(); i++)
 		{
-			System.out.println(i +". sýradaki oyuncu " + this.neighbors.get(i) +", matris indis numarasý " + (i-1));
+			System.out.println(i +". sýradaki oyuncu " + this.neighbors.get(i));
 		}
 	}
 	public void print() {
@@ -52,9 +57,15 @@ public class Graph {
 			{
 				for(int j = 0; j < this.relationships.length; j++)
 				{
-					System.out.print(this.relationships[i][j] + " ");
+					if(i == 0 && j == 0)
+					{
+						System.out.print("  ");
+					}
+					else {
+						System.out.print("|" +this.relationships[i][j]);
+					}
 				}
-				System.out.println("");
+				System.out.println("|");
 			}
 
 			System.out.println("");
@@ -65,7 +76,7 @@ public class Graph {
 
 	public PathClass findPath(int from, int to, LinkedList<Integer> connections) {
 		PathClass result = new PathClass();
-		for(int i = 0; i < this.relationships[from].length; i++)
+		for(int i = 1; i < this.relationships[from].length; i++)
 		{
 			if(this.relationships[from][i] != 0)
 			{
@@ -74,7 +85,7 @@ public class Graph {
 		}
 		
 		 LinkedList<Integer> connections_ = new  LinkedList<Integer>();
-		for(int i = 0; i < this.relationships[to].length; i++)
+		for(int i = 1; i < this.relationships[to].length; i++)
 		{
 			if(this.relationships[to][i] != 0)
 			{
