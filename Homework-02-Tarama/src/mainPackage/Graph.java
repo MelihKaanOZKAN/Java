@@ -124,11 +124,16 @@ public class Graph {
 
 	public PathClass findPath(int from, int to, LinkedList<Integer> connections, int start) {
 		PathClass result = new PathClass();
+		boolean ConnectionExist = false;
 		for (int i = 1; i < this.relationships[from].length; i++) {
+			
 			if (this.relationships[from][i] != 0 && i != start && i != from) {
 				connections.add(i);
+				//System.out.println( " 1-" + start + " " + from+ " i = " + i);
+				 ConnectionExist = true;
 			}
 		}
+		//System.out.println("2-" +connections.toString() + " " + from + " " + to);
 		LinkedList<Integer> connections_ = new LinkedList<Integer>();
 		for (int i = 1; i < this.relationships[to].length; i++) {
 			if (this.relationships[to][i] != 0) {
@@ -140,19 +145,42 @@ public class Graph {
 				return null;
 			}
 		}
-
-		result.path.addLast(from);
+		//System.out.println("5 - " + from + " " + connections.toString() + " Connection " + ConnectionExist);
 		if (connections.size() > 0) {
 			if (connections.contains(to)) {
+				result.path.addLast(from);
 				result.path.addLast(to);
+				//System.out.println("Path: " + result.path.toString());
 			} else {
 				int from_ = connections.getLast();
-				result = result.mergePath(findPath(from_, to, connections, start).path);
+				connections.removeLast();		
+
+				if(ConnectionExist)
+				{
+					//System.out.println("3-" +from_ + " " + connections.toString() + " path " + result.path.toString() + " Connection " + ConnectionExist );
+					result.path.addLast(from);
+					/*if(connections.isEmpty())
+					{
+						result.path.addLast(from_);
+					}*/
+				}
+				else {
+					
+					//result.path.addLast(from_);
+				}				
+
+				//System.out.println(" 2 - Path: " + result.path.toString());
+				PathClass path = findPath(from_, to, connections, start);
+				result = result.mergePath(path.path);
+
+				//System.out.println(" 6 - Path: " + result.path.toString());
 
 			}
 		} else {
+			result.path.removeLast();
 			return null;
 		}
+	//	System.out.println("4-" + result.path.toString());
 		return result;
 	}
 

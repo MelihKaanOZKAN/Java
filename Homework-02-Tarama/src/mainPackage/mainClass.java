@@ -119,6 +119,7 @@ public class mainClass {
 				continue;
 			}
 			PathClass path = graph.findPath(from, to, new LinkedList<Integer>(), from);
+		//	System.out.println(path.path.toString());
 			if (path != null) {
 				for (int i = 1; i < path.path.size(); i++) {
 					String Name1 = graph.neighbors.get(path.path.get(i - 1));
