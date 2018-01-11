@@ -14,7 +14,7 @@ public class Graph {
 			this.neighbors = neighbors;
 			this.weights = new LinkedList<String>();
 			this.weights.addLast("0");
-			this.relationships = new int[this.neighbors.size()][this.neighbors.size()];
+			this.relationships = new int[this.neighbors.size()-1][this.neighbors.size()-1];
 			// set all relationships to 0
 			for (int i = 0; i < this.relationships.length; i++) {
 				this.relationships[i][i] = 0;
@@ -26,35 +26,38 @@ public class Graph {
 
 	public void addRelation(int from, int to, int index) {
 		try {
-			// System.out.println("From: " + from + " To: " + to + " Index: " + index);
+			//System.out.println("From: " + from + " To: " + to + " Index: " + index);
 			// set relationships
-			this.relationships[from][to] = index;
-			this.relationships[to][from] = index;
+			this.relationships[from-1][to-1] = index;
+			this.relationships[to-1][from-1] = index;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void printNeighbors()
+	{
+		System.out.println("Oyuncularýn listesi");
+		for(int i = 1; i < this.neighbors.size(); i++)
+		{
+			System.out.println(i +". sýradaki oyuncu " + this.neighbors.get(i) +", matris indis numarasý " + (i-1));
+		}
+	}
 	public void print() {
 		try {
-			String[][] data = new String[this.neighbors.size()][this.neighbors.size()];
-			System.out.print('\t');
-			for(int i = 1; i < this.neighbors.size(); i++)
+			this.printNeighbors();
+			System.out.println("");
+			System.out.println("Oluþturulan Matris: ");
+			for(int i = 0; i < this.relationships.length; i++)
 			{
-				data[0][i] = this.neighbors.get(i);
-			}
-			for(int i = 1; i < this.neighbors.size(); i++)
-			{
-				data[i][0] = this.neighbors.get(i);
-				for(int j = 1; j < this.neighbors.size() ; j++)
+				for(int j = 0; j < this.relationships.length; j++)
 				{
-					data[i][j] = this.weights.get(this.relationships[i][j]);
+					System.out.print(this.relationships[i][j] + " ");
 				}
+				System.out.println("");
 			}
-			for(int i = 0; i < data.length; i++)
-			{
-				System.out.println(Arrays.toString(data[i]));
-			}
+
+			System.out.println("");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

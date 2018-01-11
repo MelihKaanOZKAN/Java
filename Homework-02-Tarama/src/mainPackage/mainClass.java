@@ -11,6 +11,13 @@ public class mainClass {
 	private void addRelationsAndWeights(String data, Graph graph, int index) {
 		// Split incoming line
 		String[] fragmentedData = data.split("-");
+		// Check data
+		if (fragmentedData.length != graph.neighbors.size()) {
+			System.out.println("Error: Too much relation");
+			System.out.println("Node count: " + (graph.neighbors.size() - 1));
+			System.out.println("Error is here: " + data);
+			System.exit(0);
+		}
 		// Add film to the film list
 		graph.weights.addLast(fragmentedData[0]);
 		// Mark which id is 1
@@ -81,31 +88,46 @@ public class mainClass {
 
 		File file = new File("C:\\graphdata.txt");
 		Graph graph = getGraphFromFile(file);
-		/*S
-		 * System.out.println("Oluþturulan Matris: ");
-		 *  graph.print();
-		 */
-		
-		Scanner input = new Scanner(System.in);
-		System.out.print("1. Oyuncu Adýný Giriniz: ");
-		String name1 = input.nextLine();
-		System.out.print("2. Oyuncu Adýný Giriniz: ");
-		String name2 = input.nextLine();
-		int from = graph.findNeigbor(name1);
-		int to = graph.findNeigbor(name2);
 
-		PathClass path = graph.findPath(from, to, new LinkedList<Integer>());
-		if(path != null)
-		{
-			for (int i = 1; i < path.path.size(); i++) {
-				String Name1 = graph.neighbors.get(path.path.get(i - 1));
-				String Name2 = graph.neighbors.get(path.path.get(i));
-				String MovieName = graph.weights.get(graph.relationships[path.path.get(i - 1)][path.path.get(i)]);
-				System.out.println(Name1 + " '" + MovieName + "' Filminde  " + Name2 + " Ýle Oynadý.");
+		graph.print();
+
+		System.out.println("Çýkmak için ilk kiþi adýna 'bitir' yazýnýz.");
+		while (true) {
+			Scanner input = new Scanner(System.in);
+			System.out.print("1. Oyuncu Adýný Giriniz: ");
+			String name1 = input.nextLine();
+			if (name1.equalsIgnoreCase("bitir")) {
+				break;
 			}
-		}
-		else {
-			System.out.println(name1 + " ile " + name2 + " arasýnda hiçbir yol bulunamadý.");
+			System.out.print("2. Oyuncu Adýný Giriniz: ");
+			String name2 = input.nextLine();
+			int from = graph.findNeigbor(name1);
+			int to = graph.findNeigbor(name2);
+			if (from == 0) {
+				System.out.println(name1 + " adlý oyuncu tanýmlý deðil.");
+				continue;
+			}
+			if (to == 0) {
+				System.out.println(name2 + " adlý oyuncu tanýmlý deðil.");
+				continue;
+			}
+			PathClass path = graph.findPath(from, to, new LinkedList<Integer>());
+			if (path != null) {
+				for (int i = 1; i < path.path.size(); i++) {
+					String Name1 = graph.neighbors.get(path.path.get(i - 1));
+					String Name2 = graph.neighbors.get(path.path.get(i));
+					String MovieName = graph.weights.get(graph.relationships[path.path.get(i - 1)][path.path.get(i)]);
+					if (i == 1) {
+						System.out.println(Name1 + " '" + MovieName + "' filminde  " + Name2 + " ile rol aldý. ");
+					} else {
+						System.out.println(Name1 + " da '" + MovieName + "' filminde  " + Name2 + " ile rol aldý. ");
+					}
+
+				}
+				System.out.println("");
+			} else {
+				System.out.println(name1 + " ile " + name2 + " arasýnda hiçbir baðlantý bulunamadý.");
+			}
 		}
 
 	}
