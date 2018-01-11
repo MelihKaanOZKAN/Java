@@ -62,6 +62,16 @@ public class Graph {
 			this.printWeights();
 			System.out.println("");
 			System.out.println("Oluþturulan Matris: ");
+			int max = 0;
+			int max_ = 0;
+			for(int i = 1; i < this.weights.size(); i++)
+			{
+				if (this.weights.get(i).length() > max_)
+				{
+					max_ = this.weights.get(i).length();
+				}
+			}
+			max_++;
 			for(int i = 0; i < this.relationships.length; i++)
 			{
 				for(int j = 0; j < this.relationships.length; j++)
@@ -70,8 +80,45 @@ public class Graph {
 					{
 						System.out.print("  ");
 					}
+					else if(i >=1 && j >= 1){
+						String text = "|" +this.weights.get(this.relationships[i][j]);
+						
+							int diffefence = max_ - text.length();
+							for(int k = 0; k< diffefence; k++)
+							{
+								text += " ";
+							}
+						System.out.print(text);
+					}
 					else {
-						System.out.print("|" +this.relationships[i][j]);
+						String text = "|" +this.neighbors.get(this.relationships[i][j]);
+						if (max < text.length())
+						{
+							max = text.length();
+						}else {
+							int diffefence = max - text.length();
+							for(int k = 0; k< diffefence; k++)
+							{
+								text += " ";
+							}
+						}
+						if(i == 0 && j == 1)
+						{
+							for(int k = 0; k< max-1; k++)
+							{
+								System.out.print(" ");
+							}
+							
+						}
+						 if(i == 0)
+						{
+							int diffefence = max_ - text.length();
+							for(int k = 0; k< diffefence; k++)
+							{
+								text += " ";
+							}
+						}
+						System.out.print(text);
 					}
 				}
 				System.out.println("|");
