@@ -12,9 +12,9 @@ public class mainClass {
 		// Split incoming line
 		String[] fragmentedData = data.split("-");
 		// Check data
-		if (fragmentedData.length != graph.neighbors.size()) {
-			System.out.println("Error: Too much relation");
-			System.out.println("Node count: " + (graph.neighbors.size() - 1));
+		if (fragmentedData.length != graph.nodes.size()) {
+			System.out.println("Error: Too much/Not Enough relation");
+			System.out.println("Node count: " + (graph.nodes.size() - 1));
 			System.out.println("Error is here: " + data);
 			System.exit(0);
 		}
@@ -60,15 +60,15 @@ public class mainClass {
 			// First data is unnecessary
 			tmp[0] = "";
 			// List of actors
-			LinkedList<String> neighbors = new LinkedList<String>();
+			LinkedList<String> nodes = new LinkedList<String>();
 			// First id is 1
-			neighbors.addLast("");
+			nodes.addLast("");
 			// Add actors to the list
 			for (int i = 1; i < tmp.length; i++) {
-				neighbors.addLast(tmp[i]);
+				nodes.addLast(tmp[i]);
 			}
 			// Graph Definition
-			result = new Graph(neighbors);
+			result = new Graph(nodes);
 			// Reading Films
 			int index = 1;
 			mainClass main = new mainClass();
@@ -118,12 +118,17 @@ public class mainClass {
 				System.out.println(name2 + " adlý oyuncu tanýmlý deðil.");
 				continue;
 			}
+			if(from == to)
+			{
+				System.out.println("Ýki isim ayný olamaz.");
+				continue;
+			}
 			PathClass path = graph.findPath(from, to, new LinkedList<Integer>(), from);
 		//	System.out.println(path.path.toString());
 			if (path != null) {
 				for (int i = 1; i < path.path.size(); i++) {
-					String Name1 = graph.neighbors.get(path.path.get(i - 1));
-					String Name2 = graph.neighbors.get(path.path.get(i));
+					String Name1 = graph.nodes.get(path.path.get(i - 1));
+					String Name2 = graph.nodes.get(path.path.get(i));
 					String MovieName = graph.weights.get(graph.relationships[path.path.get(i - 1)][path.path.get(i)]);
 					if (i == 1) {
 						System.out.println(Name1 + " '" + MovieName + "' filminde  " + Name2 + " ile rol aldý. ");

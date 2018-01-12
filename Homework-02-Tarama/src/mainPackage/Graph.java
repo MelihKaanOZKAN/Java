@@ -4,22 +4,22 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Graph {
-	LinkedList<String> neighbors;
+	LinkedList<String> nodes;
 	int[][] relationships;
 	LinkedList<String> weights;
 
 	// Constructor
-	public Graph(LinkedList<String> neighbors) {
+	public Graph(LinkedList<String> nodes) {
 		try {
-			this.neighbors = neighbors;
+			this.nodes = nodes;
 			this.weights = new LinkedList<String>();
 			this.weights.addLast("0");
-			this.relationships = new int[this.neighbors.size()][this.neighbors.size()];
+			this.relationships = new int[this.nodes.size()][this.nodes.size()];
 			// set all relationships to 0
 			for (int i = 0; i < this.relationships.length; i++) {
 				this.relationships[i][i] = 0;
 			}
-			for (int i = 1; i < this.neighbors.size(); i++) {
+			for (int i = 1; i < this.nodes.size(); i++) {
 				this.relationships[i][0] = i;
 				this.relationships[0][i] = i;
 			}
@@ -39,10 +39,10 @@ public class Graph {
 		}
 	}
 
-	public void printNeighbors() {
+	public void printnodes() {
 		System.out.println("Oyuncularýn listesi");
-		for (int i = 1; i < this.neighbors.size(); i++) {
-			System.out.println(i + ". sýradaki oyuncu " + this.neighbors.get(i));
+		for (int i = 1; i < this.nodes.size(); i++) {
+			System.out.println(i + ". sýradaki oyuncu " + this.nodes.get(i));
 		}
 		System.out.println("");
 	}
@@ -57,7 +57,7 @@ public class Graph {
 
 	public void print() {
 		try {
-			this.printNeighbors();
+			this.printnodes();
 			this.printWeights();
 			System.out.println("");
 			System.out.println("Oluþturulan Matris: ");
@@ -85,7 +85,7 @@ public class Graph {
 						}
 						System.out.print(text);
 					} else {
-						String text = this.neighbors.get(this.relationships[i][j]);
+						String text = this.nodes.get(this.relationships[i][j]);
 						if (max < text.length()) {
 							max = text.length();
 						} else {
@@ -123,71 +123,76 @@ public class Graph {
 	}
 
 	public PathClass findPath(int from, int to, LinkedList<Integer> connections, int start) {
-		PathClass result = new PathClass();
-		boolean ConnectionExist = false;
-		for (int i = 1; i < this.relationships[from].length; i++) {
-			
-			if (this.relationships[from][i] != 0 && i != start && i != from) {
-				connections.add(i);
-				//System.out.println( " 1-" + start + " " + from+ " i = " + i);
-				 ConnectionExist = true;
+		try {
+			PathClass result = new PathClass();
+			boolean ConnectionExist = false;
+			for (int i = 1; i < this.relationships[from].length; i++) {
+				
+				if (this.relationships[from][i] != 0 && i != start && i != from) {
+					connections.add(i);
+					//System.out.println( " 1-" + start + " " + from+ " i = " + i);
+					 ConnectionExist = true;
+				}
 			}
-		}
-		//System.out.println("2-" +connections.toString() + " " + from + " " + to);
-		LinkedList<Integer> connections_ = new LinkedList<Integer>();
-		for (int i = 1; i < this.relationships[to].length; i++) {
-			if (this.relationships[to][i] != 0) {
-				connections_.add(i);
+			//System.out.println("2-" +connections.toString() + " " + from + " " + to);
+			LinkedList<Integer> connections_ = new LinkedList<Integer>();
+			for (int i = 1; i < this.relationships[to].length; i++) {
+				if (this.relationships[to][i] != 0) {
+					connections_.add(i);
+				}
 			}
-		}
-		if (connections_.size() == 1) {
-			if (connections_.getLast() == to) {
+			if (connections_.size() == 1) {
+				if (connections_.getLast() == to) {
+					return null;
+				}
+			}
+			//System.out.println("5 - " + from + " " + connections.toString() + " Connection " + ConnectionExist);
+			if (connections.size() > 0) {
+				if (connections.contains(to)) {
+					result.path.addLast(from);
+					result.path.addLast(to);
+					//System.out.println("Path: " + result.path.toString());
+				} else {
+					int from_ = connections.getLast();
+					connections.removeLast();		
+
+					if(ConnectionExist)
+					{
+						//System.out.println("3-" +from_ + " " + connections.toString() + " path " + result.path.toString() + " Connection " + ConnectionExist );
+						result.path.addLast(from);
+						/*if(connections.isEmpty())
+						{
+							result.path.addLast(from_);
+						}*/
+					}
+					else {
+						
+						//result.path.addLast(from_);
+					}				
+
+					//System.out.println(" 2 - Path: " + result.path.toString());
+					PathClass path = findPath(from_, to, connections, start);
+					result = result.mergePath(path.path);
+
+					//System.out.println(" 6 - Path: " + result.path.toString());
+
+				}
+			} else {
+				result.path.removeLast();
 				return null;
 			}
-		}
-		//System.out.println("5 - " + from + " " + connections.toString() + " Connection " + ConnectionExist);
-		if (connections.size() > 0) {
-			if (connections.contains(to)) {
-				result.path.addLast(from);
-				result.path.addLast(to);
-				//System.out.println("Path: " + result.path.toString());
-			} else {
-				int from_ = connections.getLast();
-				connections.removeLast();		
-
-				if(ConnectionExist)
-				{
-					//System.out.println("3-" +from_ + " " + connections.toString() + " path " + result.path.toString() + " Connection " + ConnectionExist );
-					result.path.addLast(from);
-					/*if(connections.isEmpty())
-					{
-						result.path.addLast(from_);
-					}*/
-				}
-				else {
-					
-					//result.path.addLast(from_);
-				}				
-
-				//System.out.println(" 2 - Path: " + result.path.toString());
-				PathClass path = findPath(from_, to, connections, start);
-				result = result.mergePath(path.path);
-
-				//System.out.println(" 6 - Path: " + result.path.toString());
-
-			}
-		} else {
-			result.path.removeLast();
+//	System.out.println("4-" + result.path.toString());
+			return result;
+		} catch (Exception e) {
+			//e.printStackTrace();
 			return null;
 		}
-	//	System.out.println("4-" + result.path.toString());
-		return result;
 	}
 
 	public int findNeigbor(String name) {
 		int result = 0;
-		for (int i = 0; i < this.neighbors.size(); i++) {
-			if (this.neighbors.get(i).equalsIgnoreCase(name)) {
+		for (int i = 0; i < this.nodes.size(); i++) {
+			if (this.nodes.get(i).equalsIgnoreCase(name)) {
 				result = i;
 			}
 		}
