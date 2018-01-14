@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class mainClass {
 
+	// graphdata Path
+	private final static String GraphDataTxtPath = "C:\\graphdata.txt";
+	
 	private void addRelationsAndWeights(String data, Graph graph, int index) {
 		// Split incoming line
 		String[] fragmentedData = data.split("-");
@@ -86,7 +89,7 @@ public class mainClass {
 
 	public static void main(String[] args) {
 
-		File file = new File("C:\\graphdata.txt");
+		File file = new File(GraphDataTxtPath);
 		Graph graph = getGraphFromFile(file);
 
 		graph.print();
