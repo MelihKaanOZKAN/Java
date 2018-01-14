@@ -111,8 +111,7 @@ public class Graph {
 								text = " " + text;
 							}
 						}
-						if(j == 0)
-						{
+						if (j == 0) {
 							text += " ";
 						}
 						System.out.print(text);
@@ -127,70 +126,81 @@ public class Graph {
 		}
 	}
 
-	public PathClass findPath(int from, int to, LinkedList<Integer> connections, int start) {
+	public PathClass findPath(int from, int to, int start, LinkedList<Integer> prevs ) {
 
 		PathClass result = new PathClass();
 		try {
+			LinkedList<Integer> connections = new LinkedList<Integer>();
 			boolean ConnectionExist = false;
 			for (int i = 1; i < this.relationships[from].length; i++) {
 
-				if (this.relationships[from][i] != 0 && i != start && i != from) {
+				if (this.relationships[from][i] != 0 && i != start && i != from  && !(prevs.contains(i))) {
 					connections.add(i);
 					ConnectionExist = true;
 				}
 			}
-			/*   DO NOT DELETE
-			LinkedList<Integer> connections_ = new LinkedList<Integer>();
-			for (int i = 1; i < this.relationships[to].length; i++) {
-				if (this.relationships[to][i] != 0) {
-					connections_.add(i);
-				}
-			}
-			if (connections_.size() == 1) {
-				if (connections_.getLast() == to) {
-					return null;
-				}
-			}*/
-			//founded routes
+			//System.out.println(connections.toString() + "From " + from);
+			/*
+			 * DO NOT DELETE LinkedList<Integer> connections_ = new LinkedList<Integer>();
+			 * for (int i = 1; i < this.relationships[to].length; i++) { if
+			 * (this.relationships[to][i] != 0) { connections_.add(i); } } if
+			 * (connections_.size() == 1) { if (connections_.getLast() == to) { return null;
+			 * } }
+			 */
+			// founded routes
 			LinkedList<PathClass> paths = new LinkedList<PathClass>();
-			//if connectionExist
-			if (connections.size() > 0) {
-				// if connections contains target
-				if (connections.contains(to)) {
-					result.path.addLast(from);
-					result.path.addLast(to);
-				} else {
-					// until there are no more route
-					while (connections.size() > 0) {
-						PathClass result_ = new PathClass();
-						int from_ = connections.getLast();
-						connections.removeLast();
-						if (ConnectionExist) {
-							result_.path.addLast(from);
-						}
-						PathClass path = findPath(from_, to, new LinkedList<Integer>(), start);
-						if (path != null) {
-							result_ = result_.mergePath(path.path);
-							paths.addLast(result_);
-						}
-						if (connections.isEmpty()) {
-							break;
-						}
-					}
-
-				}
-			} else {
+			// if connectionExist
+					if (connections.size() > 0) {
+							if (connections.contains(to)) {
+									result.path.addLast(from);
+									result.path.addLast(to);
+									paths.add(result);
+									} else {
+										// if connections contains target
+										// until there are no more route
+					
+										
+										while (connections.size() > 0) {
+											//System.out.println("Connections b: " + connections.toString());
+											PathClass result_ = new PathClass();
+											if (ConnectionExist) {
+												result_.path.addLast(from);
+											}
+											int from_ = connections.getLast();
+											connections.removeLast();
+											prevs.add(from_);
+											//System.out.println(connections.toString() + "From " + from + " from_ " + from_);
+											//System.out.println(" aaa " + from+ " aaa " + from_ +" " + connections.toString() + "prevs " + prevs.toString());
+											//System.out.println("**********");
+											PathClass path = findPath(from_, to, start, prevs);
+					
+											if (path != null) {
+												result_ = result_.mergePath(path.path);
+												paths.addLast(result_);
+											}
+											if (connections.isEmpty()) {
+												break;
+											}
+										}
+										
+									}
+					} else {
 				// result.path.removeLast();
 				return null;
 			}
+		
 			if (!paths.isEmpty()) {
 				PathClass minCost = paths.get(0);
 				for (int i = 0; i < paths.size(); i++) {
 					if (paths.get(i).cost < minCost.cost) {
 						minCost = paths.get(i);
+						
 					}
 				}
 				result = minCost;
+			}
+			else{
+				result = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

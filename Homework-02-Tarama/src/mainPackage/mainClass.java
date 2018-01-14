@@ -141,7 +141,7 @@ public class mainClass {
 					System.out.println("Ýki isim ayný olamaz.");
 					continue;
 				}
-				PathClass path = graph.findPath(from, to, new LinkedList<Integer>(), from);
+				PathClass path = graph.findPath(from, to, from,  new LinkedList<Integer>());
 				if (path != null) {
 					for (int i = 1; i < path.path.size(); i++) {
 						String Name1 = graph.nodes.get(path.path.get(i - 1));
