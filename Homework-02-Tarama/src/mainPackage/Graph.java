@@ -32,10 +32,11 @@ public class Graph {
 
 	public void addRelation(int from, int to, int index) {
 		try {
-			// System.out.println("From: " + from + " To: " + to + " Index: " + index);
 			// set relationships
-			this.relationships[from][to] = index;
-			this.relationships[to][from] = index;
+			if (from != to) {
+				this.relationships[from][to] = index;
+				this.relationships[to][from] = index;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,6 +62,7 @@ public class Graph {
 		try {
 			this.printnodes();
 			this.printWeights();
+			// setting to prevent slippage
 			System.out.println("");
 			System.out.println("Oluþturulan Matris: ");
 			int max = 0;
@@ -78,11 +80,11 @@ public class Graph {
 					} else if (i >= 1 && j >= 1) {
 						String text = this.weights.get(this.relationships[i][j]);
 
-						int diffefence = max_ - text.length();
-						for (int k = 0; k < diffefence / 2 + 3; k++) {
+						int difference = max_ - text.length();
+						for (int k = 0; k < difference / 2 + 3; k++) {
 							text += " ";
 						}
-						for (int k = 0; k < diffefence / 2; k++) {
+						for (int k = 0; k < difference / 2; k++) {
 							text = " " + text;
 						}
 						System.out.print(text);
@@ -91,8 +93,8 @@ public class Graph {
 						if (max < text.length()) {
 							max = text.length();
 						} else {
-							int diffefence = max - text.length();
-							for (int k = 0; k < diffefence; k++) {
+							int difference = max - text.length();
+							for (int k = 0; k < difference; k++) {
 								text += " ";
 							}
 						}
@@ -103,12 +105,12 @@ public class Graph {
 
 						}
 						if (i == 0) {
-							int diffefence = max_ - text.length();
+							int difference = max_ - text.length();
 
-							for (int k = 0; k < diffefence / 2 + 3; k++) {
+							for (int k = 0; k < difference / 2 + 3; k++) {
 								text += " ";
 							}
-							for (int k = 1; k < diffefence / 2; k++) {
+							for (int k = 1; k < difference / 2; k++) {
 								text = " " + text;
 							}
 						}
@@ -133,11 +135,10 @@ public class Graph {
 
 				if (this.relationships[from][i] != 0 && i != start && i != from) {
 					connections.add(i);
-					// System.out.println( " 1-" + start + " " + from+ " i = " + i);
 					ConnectionExist = true;
 				}
 			}
-			// System.out.println("2-" +connections.toString() + " " + from + " " + to);
+			/*   DO NOT DELETE
 			LinkedList<Integer> connections_ = new LinkedList<Integer>();
 			for (int i = 1; i < this.relationships[to].length; i++) {
 				if (this.relationships[to][i] != 0) {
@@ -148,14 +149,17 @@ public class Graph {
 				if (connections_.getLast() == to) {
 					return null;
 				}
-			}
+			}*/
+			//founded routes
 			LinkedList<PathClass> paths = new LinkedList<PathClass>();
+			//if connectionExist
 			if (connections.size() > 0) {
+				// if connections contains target
 				if (connections.contains(to)) {
 					result.path.addLast(from);
 					result.path.addLast(to);
 				} else {
-
+					// until there are no more route
 					while (connections.size() > 0) {
 						PathClass result_ = new PathClass();
 						int from_ = connections.getLast();
@@ -163,9 +167,7 @@ public class Graph {
 						if (ConnectionExist) {
 							result_.path.addLast(from);
 						}
-
 						PathClass path = findPath(from_, to, new LinkedList<Integer>(), start);
-						
 						if (path != null) {
 							result_ = result_.mergePath(path.path);
 							paths.addLast(result_);
@@ -176,15 +178,12 @@ public class Graph {
 					}
 
 				}
-			} 
-			else {
-				//result.path.removeLast();
+			} else {
+				// result.path.removeLast();
 				return null;
 			}
 			if (!paths.isEmpty()) {
-
 				PathClass minCost = paths.get(0);
-
 				for (int i = 0; i < paths.size(); i++) {
 					if (paths.get(i).cost < minCost.cost) {
 						minCost = paths.get(i);
@@ -192,7 +191,6 @@ public class Graph {
 				}
 				result = minCost;
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			// return null;
