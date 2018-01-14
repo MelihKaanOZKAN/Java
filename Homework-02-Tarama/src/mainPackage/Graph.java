@@ -111,6 +111,10 @@ public class Graph {
 								text = " " + text;
 							}
 						}
+						if(j == 0)
+						{
+							text += " ";
+						}
 						System.out.print(text);
 					}
 				}
@@ -196,13 +200,17 @@ public class Graph {
 	}
 
 	public int findNode(String name) {
-		int result = 0;
-		for (int i = 0; i < this.nodes.size(); i++) {
-			if (this.nodes.get(i).equalsIgnoreCase(name)) {
-				result = i;
+		try {
+			int result = 0;
+			for (int i = 0; i < this.nodes.size(); i++) {
+				if (this.nodes.get(i).equalsIgnoreCase(name)) {
+					result = i;
+				}
 			}
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return result;
 	}
 
 }
