@@ -1,9 +1,6 @@
 package mainPackage;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-
-import javafx.scene.shape.Path;
 
 public class Graph {
 	LinkedList<String> nodes;
