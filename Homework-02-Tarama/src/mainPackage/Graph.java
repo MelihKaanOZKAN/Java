@@ -3,6 +3,8 @@ package mainPackage;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import javafx.scene.shape.Path;
+
 public class Graph {
 	LinkedList<String> nodes;
 	int[][] relationships;
@@ -123,18 +125,19 @@ public class Graph {
 	}
 
 	public PathClass findPath(int from, int to, LinkedList<Integer> connections, int start) {
+
+		PathClass result = new PathClass();
 		try {
-			PathClass result = new PathClass();
 			boolean ConnectionExist = false;
 			for (int i = 1; i < this.relationships[from].length; i++) {
-				
+
 				if (this.relationships[from][i] != 0 && i != start && i != from) {
 					connections.add(i);
-					//System.out.println( " 1-" + start + " " + from+ " i = " + i);
-					 ConnectionExist = true;
+					// System.out.println( " 1-" + start + " " + from+ " i = " + i);
+					ConnectionExist = true;
 				}
 			}
-			//System.out.println("2-" +connections.toString() + " " + from + " " + to);
+			// System.out.println("2-" +connections.toString() + " " + from + " " + to);
 			LinkedList<Integer> connections_ = new LinkedList<Integer>();
 			for (int i = 1; i < this.relationships[to].length; i++) {
 				if (this.relationships[to][i] != 0) {
@@ -146,47 +149,55 @@ public class Graph {
 					return null;
 				}
 			}
-			//System.out.println("5 - " + from + " " + connections.toString() + " Connection " + ConnectionExist);
+			LinkedList<PathClass> paths = new LinkedList<PathClass>();
 			if (connections.size() > 0) {
 				if (connections.contains(to)) {
 					result.path.addLast(from);
 					result.path.addLast(to);
-					//System.out.println("Path: " + result.path.toString());
 				} else {
-					int from_ = connections.getLast();
-					connections.removeLast();		
 
-					if(ConnectionExist)
-					{
-						//System.out.println("3-" +from_ + " " + connections.toString() + " path " + result.path.toString() + " Connection " + ConnectionExist );
-						result.path.addLast(from);
-						/*if(connections.isEmpty())
-						{
-							result.path.addLast(from_);
-						}*/
-					}
-					else {
+					while (connections.size() > 0) {
+						PathClass result_ = new PathClass();
+						int from_ = connections.getLast();
+						connections.removeLast();
+						if (ConnectionExist) {
+							result_.path.addLast(from);
+						}
+
+						PathClass path = findPath(from_, to, new LinkedList<Integer>(), start);
 						
-						//result.path.addLast(from_);
-					}				
-
-					//System.out.println(" 2 - Path: " + result.path.toString());
-					PathClass path = findPath(from_, to, connections, start);
-					result = result.mergePath(path.path);
-
-					//System.out.println(" 6 - Path: " + result.path.toString());
+						if (path != null) {
+							result_ = result_.mergePath(path.path);
+							paths.addLast(result_);
+						}
+						if (connections.isEmpty()) {
+							break;
+						}
+					}
 
 				}
-			} else {
-				result.path.removeLast();
+			} 
+			else {
+				//result.path.removeLast();
 				return null;
 			}
-//	System.out.println("4-" + result.path.toString());
-			return result;
+			if (!paths.isEmpty()) {
+
+				PathClass minCost = paths.get(0);
+
+				for (int i = 0; i < paths.size(); i++) {
+					if (paths.get(i).cost < minCost.cost) {
+						minCost = paths.get(i);
+					}
+				}
+				result = minCost;
+			}
+
 		} catch (Exception e) {
-			//e.printStackTrace();
-			return null;
+			e.printStackTrace();
+			// return null;
 		}
+		return result;
 	}
 
 	public int findNeigbor(String name) {
