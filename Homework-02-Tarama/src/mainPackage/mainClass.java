@@ -108,8 +108,8 @@ public class mainClass {
 			}
 			System.out.print("2. Oyuncu Adýný Giriniz: ");
 			String name2 = input.nextLine();
-			int from = graph.findNeigbor(name1);
-			int to = graph.findNeigbor(name2);
+			int from = graph.findNode(name1);
+			int to = graph.findNode(name2);
 			if (from == 0) {
 				System.out.println(name1 + " adlý oyuncu tanýmlý deðil.");
 				continue;

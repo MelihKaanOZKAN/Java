@@ -198,7 +198,7 @@ public class Graph {
 		return result;
 	}
 
-	public int findNeigbor(String name) {
+	public int findNode(String name) {
 		int result = 0;
 		for (int i = 0; i < this.nodes.size(); i++) {
 			if (this.nodes.get(i).equalsIgnoreCase(name)) {
