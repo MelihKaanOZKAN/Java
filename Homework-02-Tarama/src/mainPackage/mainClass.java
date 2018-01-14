@@ -109,14 +109,14 @@ public class mainClass {
 				graph.print();
 				continue;
 			}
-			System.out.print("2. Oyuncu Adýný Giriniz: ");
-			String name2 = input.nextLine();
-			int from = graph.findNode(name1);
-			int to = graph.findNode(name2);
+			int from = graph.findNode(name1);	
 			if (from == 0) {
 				System.out.println(name1 + " adlý oyuncu tanýmlý deðil.");
 				continue;
 			}
+			System.out.print("2. Oyuncu Adýný Giriniz: ");
+			String name2 = input.nextLine();
+			int to = graph.findNode(name2);
 			if (to == 0) {
 				System.out.println(name2 + " adlý oyuncu tanýmlý deðil.");
 				continue;
