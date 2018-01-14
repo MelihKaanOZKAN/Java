@@ -200,17 +200,17 @@ public class Graph {
 	}
 
 	public int findNode(String name) {
+		int result = 0;
 		try {
-			int result = 0;
 			for (int i = 0; i < this.nodes.size(); i++) {
 				if (this.nodes.get(i).equalsIgnoreCase(name)) {
 					result = i;
 				}
 			}
-			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 }
