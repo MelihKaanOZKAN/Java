@@ -233,7 +233,6 @@ public class Graph {
 			if (!paths.isEmpty()) {
 				PathClass minCost = paths.get(0);
 				for (int i = 0; i < paths.size(); i++) {
-					System.out.println(from  + " Path " + paths.get(i).path.toString() + " Cost " + paths.get(i).cost + " Size " + paths.size());
 					if (paths.get(i).cost < minCost.cost) {
 						minCost = paths.get(i);
 						
