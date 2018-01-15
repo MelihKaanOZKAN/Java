@@ -141,8 +141,10 @@ public class mainClass {
 					System.out.println("Ýki isim ayný olamaz.");
 					continue;
 				}
+				System.out.println("");
 				PathClass path = graph.findPath(from, to, from, 0, new LinkedList<Integer>());
 				if (path != null) {
+					System.out.println("Bulunan Yol:");
 					for (int i = 1; i < path.path.size(); i++) {
 						String Name1 = graph.nodes.get(path.path.get(i - 1));
 						String Name2 = graph.nodes.get(path.path.get(i));

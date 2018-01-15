@@ -102,7 +102,7 @@ public class Graph {
 						if (i == 0) {
 							int difference = max_ - text.length();
 
-							for (int k = 0; k < difference + 2 ; k++) {
+							for (int k = 0; k < difference + 2; k++) {
 								text += " ";
 							}
 						}
@@ -121,63 +121,18 @@ public class Graph {
 		}
 	}
 
-	private void test ()
-	{
-		for(int i = 0; i < this.relationships.length; i++)
-		{
-			for(int j = 0; j < this.relationships.length; j++)
-			{
-				System.out.print(this.relationships[i][j] + " ");
-			}
-			System.out.println("");
-		}
-	}
-	
-	
-	public PathClass test(int from, int to)
-	{
-		PathClass result = null;
-		LinkedList<PathClass> paths = new LinkedList<PathClass>();
-
-		LinkedList<Integer> data = new LinkedList<Integer>();
-		data.push(from);
-		LinkedList<Integer> visited = new LinkedList<Integer>();
-		
-		while(data.isEmpty())
-		{
-			int next = data.getLast();
-			visited.addLast(next);
-			for (int i = 1; i < this.relationships[next].length; i++) {
-				if (this.relationships[from][i] != 0 && i != from && !(visited.contains(i))) {
-					data.addLast(i);
-				}
-			}
-			
-			
-		}
-		return result;
-	}
-	
-	
-	public PathClass findPath(int from, int to, int start, int prev, LinkedList<Integer> prevs ) {
+	public PathClass findPath(int from, int to, int start, int prev, LinkedList<Integer> prevs) {
 
 		PathClass result = new PathClass();
 		try {
 			LinkedList<Integer> connections = new LinkedList<Integer>();
 			boolean ConnectionExist = false;
-			int test = 0; 
-			String name = this.nodes.get(from);
-			String filmName;
-			//test();
 			for (int i = 1; i < this.relationships[from].length; i++) {
-				test = this.relationships[from][i];
-				filmName = this.weights.get(test);
 				if (this.relationships[from][i] != 0 && i != start && i != from && !(prevs.contains(i))) {
 					connections.add(i);
 					ConnectionExist = true;
 				}
 			}
-			//System.out.println(connections.toString() + " From " + from + " prev " + prev + " To " + to);
 			/*
 			 * DO NOT DELETE LinkedList<Integer> connections_ = new LinkedList<Integer>();
 			 * for (int i = 1; i < this.relationships[to].length; i++) { if
@@ -188,66 +143,56 @@ public class Graph {
 			// founded routes
 			LinkedList<PathClass> paths = new LinkedList<PathClass>();
 			// if connectionExist
-					if (connections.size() > 0) {
-							if (connections.contains(to)) {
-									result.path.addLast(from);
-									result.path.addLast(to);
-									paths.add(result);
-									} else {
-										// if connections contains target
-										// until there are no more route
-					
-										//LinkedList<Integer> prevs_ = new LinkedList<Integer>();
-									//	LinkedList<Integer> prevs_ = new LinkedList<Integer>();
-										PathClass result_ = new PathClass();
-										PathClass path;
-										int from_ = 0;
-										while (connections.size() > 0) {
-											//System.out.println("Connections b: " + connections.toString() + " From " + from);
-											result_ = new PathClass();
-											if (ConnectionExist) {
-												result_.path.addLast(from);
-											}
-											from_ = connections.removeLast();
-											prevs.add(from_);
-											//System.out.println(connections.toString() + "From " + from + " from_ " + from_);
-											//System.out.println(" aaa " + from+ " aaa " + from_ +" " + connections.toString() + "prevs " + prevs.toString());
-										//	System.out.println("**********");
-											path = findPath(from_, to, start, from,  prevs);
-					
-											if (path != null) {
-												result_ = result_.mergePath(path.path);
-												paths.addLast(result_);
-											}
-											prevs.remove(new Integer(from_));
-											if (connections.isEmpty()) {
-												break;
-											}
-										}
-									}
-					} else {
-				// result.path.removeLast();
+			if (connections.size() > 0) {
+				if (connections.contains(to)) {
+					result.path.addLast(from);
+					result.path.addLast(to);
+					paths.add(result);
+				} else {
+					// if connections contains target
+					// until there are no more route
+
+					PathClass result_ = new PathClass();
+					PathClass path;
+					int from_ = 0;
+					while (connections.size() > 0) {
+						result_ = new PathClass();
+						if (ConnectionExist) {
+							result_.path.addLast(from);
+						}
+						from_ = connections.removeLast();
+						prevs.add(from_);
+						path = findPath(from_, to, start, from, prevs);
+
+						if (path != null) {
+							result_ = result_.mergePath(path.path);
+							paths.addLast(result_);
+						}
+						prevs.remove(new Integer(from_));
+						if (connections.isEmpty()) {
+							break;
+						}
+					}
+				}
+			} else {
 				return null;
 			}
-		
 			if (!paths.isEmpty()) {
 				PathClass minCost = paths.get(0);
 				for (int i = 0; i < paths.size(); i++) {
 					if (paths.get(i).cost < minCost.cost) {
 						minCost = paths.get(i);
-						
+
 					}
 				}
 				result = minCost;
-			}
-			else{
+			} else {
 
 				result = null;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			// return null;
 		}
 		return result;
 	}
