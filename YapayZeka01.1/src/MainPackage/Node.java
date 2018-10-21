@@ -54,7 +54,7 @@ public class Node {
 		return list;
 	}
 
-	public void print(char edges[],  LinkedList<String> lines) {
+	public void print(char edges[],  LinkedList<String> lines, int IN, int GN) {
 
 		if (lines.size() <= this.nodeLevel) { // if level doesn't exist in line list, create
 			lines.addLast("");
@@ -75,11 +75,19 @@ public class Node {
 				tmp += " ";
 			}
 		}
-		lines.set(this.nodeLevel, tmp += edges[this.nodeId]);//add node name to end of line and replace from list
-
+		if (this.nodeId == IN)
+		{
+			lines.set(this.nodeLevel, tmp += "|" +  edges[this.nodeId]); //mark IN
+		}
+		else if (this.nodeId == GN)
+		{
+			lines.set(this.nodeLevel, tmp += edges[this.nodeId] + "|");//mark GN
+		}else {
+			lines.set(this.nodeLevel, tmp += edges[this.nodeId]);//add node name to end of line and replace from list
+		}
 		for (int i = 0; i < this.nodes.length; i++) {//search node connections
 			if (nodes[i] != null) {//if its found, call 'print' for print itself and his connections
-				nodes[i].print(edges, lines);
+				nodes[i].print(edges, lines, IN, GN);
 			}
 		}
 
