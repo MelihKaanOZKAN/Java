@@ -1,94 +1,123 @@
 package MainPackage;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Node {
 	int nodeId;
-	Node nodes[];
-	int nodeLevel;
+	ArrayList<Node> nodes;
 	public Node() {
 
 	}
 
-	public Node(int NodeCount, int nodeId) { //initialize node
-		nodes = new Node[NodeCount]; //set connection list
+	public Node( int nodeId) { //initialize node
+		nodes = new ArrayList<>(); //Create Node List
 		this.nodeId = nodeId; //set nodeId
 	}
-
-	public Node CreateTree(int[][] matrix, int goalId, LinkedList<Integer> prevs) {
-		Node result = this; //set result to this object
-		prevs.add(this.nodeId); // add tick to visited
-		int ConnectionCount = 0; // Node connection count except visited
-		if (this.nodeId == goalId) { //if this node is goalNode, return this node;
-			result = this;
-		} else {
-			for (int i = 0; i < nodes.length; i++) { //search matrix to find a connection 
-				if (matrix[nodeId][i] != 0) {
-					if (prevs.contains(i)) { // if i is visited, pass
-						continue;
-					}
-					Node tmp = new Node(nodes.length, i); // else create a node of connection
-					tmp.nodeLevel = this.nodeLevel + 1;//set node level
-					tmp = tmp.CreateTree(matrix, goalId, prevs);//find a connection of new node with recursive call
-					if (tmp == null) {//if return is null, pass
-						continue;
-					} else {
-						nodes[ConnectionCount] = tmp; //else set tmp to node list
-						ConnectionCount++;//increase connection count
-						this.removeData(prevs, i);//remove connection from visited list
-					}
-
+	public ArrayList<Node>  getConnections(int[][] matrix){
+		if(this.nodes.size()<=0) {
+			for(int k = 0; k < matrix.length; k++)
+			{
+				if (matrix[nodeId][k] != 0) {
+					Node tmp = new Node(k);
+					this.nodes.add(tmp);
 				}
+					
 			}
-
 		}
+		return this.nodes;
+	}
+	public Node CreateTree(int[][] matrix, Node goal) {
+		Node result = new Node(this.nodeId); //set result to this object
+		Queue<Node> queue = new LinkedList<>();
+		LinkedList<Node> prevs = new LinkedList<Node>();
+		ArrayList<Node> connections = this.getConnections(matrix);
+		queue.add(this);
+		prevs.add(this);
+		Node topNode = null;
+		while(!queue.isEmpty()){
+			
+	        Node current = queue.remove();
+	        current.getConnections(matrix);
+	        topNode = result;
+	        result = result.getData(result.nodes, current);
+	        
+            if(current.nodeId ==goal.nodeId) {
+              
+               break;
+            }
+            else{
+                if(current.getConnections(matrix).isEmpty()) {
+                	
+                 continue;
+                }
+                else {
+                	if(!prevs.contains(current))
+                	{
+                		//current.nodes.clear();
+            	        result.nodes.add(current);
+                	}
+                    queue.addAll(current.getConnections(matrix));
+                }
+            }
+            prevs.add(current);
+        }
+		result = this;
 		return result; //return result
 	}
-
-	private LinkedList<Integer> removeData(LinkedList<Integer> list, int data) {
+	private Node RemoveData(ArrayList<Node> list, Node data) {
+		Node result = this;;
 		for (int i = 0; i < list.size(); i++) {//search list to find incoming data
-			if (list.get(i) == data) { //if its found, remove
-				list.remove(i);
+			if (list.get(i).nodeId == data.nodeId) { //if its found, remove
+				result = list.get(i);
 			}
 		}
-		return list;
+		return result;
+	}
+	
+	private Node getData(ArrayList<Node> list, Node data) {
+		Node result = this;;
+		for (int i = 0; i < list.size(); i++) {//search list to find incoming data
+			if (list.get(i).nodeId == data.nodeId) { //if its found, remove
+				result = list.get(i);
+			}
+		}
+		return result;
 	}
 
-	public void print(char edges[],  LinkedList<String> lines, int IN, int GN) {
+	
 
-		if (lines.size() <= this.nodeLevel) { // if level doesn't exist in line list, create
-			lines.addLast("");
-		}
-		String tmp = lines.get(this.nodeLevel); //get line of level
-		boolean oneNode = true; 
-		for (int j = 0; j < this.nodes.length; j++) {//search node connections
-			if (nodes[j] != null) { // if exist, print space and set oneNode to false because its not.
-				tmp += "  ";
-				oneNode = false;
-			}
-		}
-		if(oneNode)//if its oneNode
+	public void print(char edges[]) {
+		System.out.println(edges[this.nodeId]);
+		Node tmp = this;
+		Node topLine = this;
+		int NodeSize = 0;
+		while(tmp.nodes.size()>0)
 		{
-			String topLine = lines.get(this.nodeLevel-1);//get top line
-			for(int i = 0; i < topLine.length()-2;i++) { //print space 'till topLine length-2
+			
+			for(int i = 0; i < tmp.nodes.size(); i++)
+			{
+				System.out.print(edges[tmp.nodes.get(i).nodeId]);
+				System.out.print(" ");
+			}
+			System.out.println("|");
+		
+			tmp = topLine.nodes.get(NodeSize++);
 
-				tmp += " ";
+			if(tmp.nodes.size()<=0)
+			{
+				tmp = topLine.nodes.get(NodeSize);
+				NodeSize++;
+				System.out.print("   ");
 			}
-		}
-		if (this.nodeId == IN)
-		{
-			lines.set(this.nodeLevel, tmp += "|" +  edges[this.nodeId]); //mark IN
-		}
-		else if (this.nodeId == GN)
-		{
-			lines.set(this.nodeLevel, tmp += edges[this.nodeId] + "|");//mark GN
-		}else {
-			lines.set(this.nodeLevel, tmp += edges[this.nodeId]);//add node name to end of line and replace from list
-		}
-		for (int i = 0; i < this.nodes.length; i++) {//search node connections
-			if (nodes[i] != null) {//if its found, call 'print' for print itself and his connections
-				nodes[i].print(edges, lines, IN, GN);
+			if(NodeSize == topLine.nodes.size())
+			{
+				NodeSize = 0;
+				topLine = topLine.nodes.get(NodeSize);
+			    
 			}
+			
 		}
 
 	}
